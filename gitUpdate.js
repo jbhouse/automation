@@ -1,19 +1,24 @@
 const git = require('simple-git');
-const path = './';
+const fs = require('fs');
 
-git(path).raw(
-    [
-        'status'
-    ], (err, result) => {
+fs.readdir(process.argv[2], (err, files) => {
+    files.filter(file => fs.lstatSync(process.argv[2] + file).isDirectory()).forEach(project => {
 
-        if (Boolean(result)) {
-            console.log(result);
+        if (fs.existsSync(process.argv[2] + project + '\\.git')) {
+
+            git(process.argv[2] + project).raw(
+                [
+                    'pull',
+                    'origin',
+                    'develop'
+                ], (err, result) => {
+                    if (Boolean(result)) {
+                        console.log(result);
+                    }
+                    if (Boolean(err)) {
+                        console.log(err);
+                    }
+                });
         }
-        if (Boolean(err)) {
-            console.log(err);
-        }
-
-        // err is null unless this command failed
-        // result is the raw output of this command
-
-    });
+    })
+});
