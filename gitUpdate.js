@@ -1,13 +1,11 @@
 const git = require('simple-git');
-const fs = require('fs');
 const cmd = require('./commandLine');
+const filters = require('./filters.js')
 
-const path = process.argv[2];
-const filterForGitProjects =
-    (absolutePath) => fs.lstatSync(absolutePath).isDirectory() && cmd.checkIfFileExists(absolutePath + '\\.git')
+let path = process.argv[2];
 
-cmd.changeDirectoryTo(path).filter((project) => filterForGitProjects(path + project)).forEach(projectName => {
-    git(path + projectName).raw(
+filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach(projectName => {
+    git(projectName).raw(
         [
             'pull',
             'origin',
@@ -15,10 +13,10 @@ cmd.changeDirectoryTo(path).filter((project) => filterForGitProjects(path + proj
 
         ], (err, result) => {
             if (Boolean(result)) {
-                console.log(path + projectName + "---", result);
+                console.log(projectName + "---", result);
             }
             if (Boolean(err)) {
-                console.log(path + projectName + "---", err);
+                console.log(projectName + "---", err);
             }
         });
-})
+});
