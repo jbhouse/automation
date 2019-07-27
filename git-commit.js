@@ -1,6 +1,6 @@
 const git = require('simple-git');
-const commitMessage = process.argv[3];
 const currentWorkingDirectory = process.argv[2];
+const commitMessage = process.argv[3];
 const branch = require('git-branch');
 
 branch(currentWorkingDirectory)
