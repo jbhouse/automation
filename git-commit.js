@@ -9,14 +9,14 @@ for (let i = 3; i < process.argv.length; i++) {
 
 branch(currentWorkingDirectory)
     .then(name => {
-        console.log(name + ": " + commitMessage);
+        let branchName = name + ":" + commitMessage;
 
         git(currentWorkingDirectory).raw(
             [
                 'commit',
                 '.',
                 '-m',
-                name + ":" + commitMessage
+                branchName
             ], (err, result) => {
 
                 if (Boolean(result)) {
