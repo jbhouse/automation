@@ -12,8 +12,6 @@ fs.readdir(process.argv[2], (err, files) => {
                     'origin',
                     'develop'
                 ], (err, result) => {
-                    console.log();
-
                     if (Boolean(result)) {
                         console.log(process.argv[2] + project + "---", result);
                     }
