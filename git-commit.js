@@ -11,11 +11,9 @@ git(currentWorkingDirectory).raw(
     ], (err, result) => {
 
         if (Boolean(result)) {
-            console.log("yes");
-            console.log(process.argv[2] + "---", result);
+            console.log(result);
         }
         if (Boolean(err)) {
-            console.log("no");
-            console.log(process.argv[2] + "---", err);
+            console.log(err);
         }
     });
