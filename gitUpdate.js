@@ -1,24 +1,32 @@
 const git = require('simple-git');
 const fs = require('fs');
+const cdAndLs = require('./cdAndListDirectories');
 
-fs.readdir(process.argv[2], (err, files) => {
-    files.filter(file => fs.lstatSync(process.argv[2] + file).isDirectory()).forEach(project => {
+const directoryPath = process.argv[2];
+const filter = () => fs.lstatSync(directoryPath + file).isDirectory()
 
-        if (fs.existsSync(process.argv[2] + project + '\\.git')) {
+cdAndLs.cdAndListDirectories(directoryPath, filter)
+    // we go to the given directory path and apply the given filter to retrieve the files/folder we want
+    .then((directoryList) => {
+        directoryList.forEach(project => {
+            if (fs.existsSync(directoryPath + project + '\\.git')) {
 
-            git(process.argv[2] + project).raw(
-                [
-                    'pull',
-                    'origin',
-                    'develop'
-                ], (err, result) => {
-                    if (Boolean(result)) {
-                        console.log(process.argv[2] + project + "---", result);
-                    }
-                    if (Boolean(err)) {
-                        console.log(process.argv[2] + project + "---", err);
-                    }
-                });
-        }
+                git(directoryPath + project).raw(
+                    [
+                        'pull',
+                        'origin',
+                        'develop'
+
+                    ], (err, result) => {
+                        if (Boolean(result)) {
+                            console.log(directoryPath
+                                + project + "---", result);
+                        }
+                        if (Boolean(err)) {
+                            console.log(directoryPath + project + "---", err);
+                        }
+                    });
+            }
+        });
+
     })
-});
