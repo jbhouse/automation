@@ -3,30 +3,26 @@ const fs = require('fs');
 const cdAndLs = require('./cdAndListDirectories');
 
 const directoryPath = process.argv[2];
-const filter = () => fs.lstatSync(directoryPath + file).isDirectory()
+const directoryFilter = () => fs.lstatSync(directoryPath + file).isDirectory();
 
-cdAndLs.cdAndListDirectories(directoryPath, filter)
-    // we go to the given directory path and apply the given filter to retrieve the files/folder we want
-    .then((directoryList) => {
-        directoryList.forEach(project => {
-            if (fs.existsSync(directoryPath + project + '\\.git')) {
+cdAndLs.cdAndList(directoryPath, directoryFilter).then((directoryList) =>
+    // filter out everything that isn't a git project
+    directoryList.filter(project => fs.existsSync(directoryPath + project + '\\.git'))
+        .forEach(element => {
+            git(directoryPath + element).raw(
+                [
+                    'pull',
+                    'origin',
+                    'develop'
 
-                git(directoryPath + project).raw(
-                    [
-                        'pull',
-                        'origin',
-                        'develop'
-
-                    ], (err, result) => {
-                        if (Boolean(result)) {
-                            console.log(directoryPath
-                                + project + "---", result);
-                        }
-                        if (Boolean(err)) {
-                            console.log(directoryPath + project + "---", err);
-                        }
-                    });
-            }
-        });
-
-    })
+                ], (err, result) => {
+                    if (Boolean(result)) {
+                        console.log(directoryPath
+                            + project + "---", result);
+                    }
+                    if (Boolean(err)) {
+                        console.log(directoryPath + project + "---", err);
+                    }
+                });
+        })
+)
