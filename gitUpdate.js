@@ -3,10 +3,10 @@ const fs = require('fs');
 const cmd = require('./commandLine');
 
 const path = process.argv[2];
-// const filterForGitProjects =
-// (absolutePath) => fs.lstatSync(absolutePath).isDirectory() && cmd.checkIfFileExists(absolutePath + '\\.git')
+const filterForGitProjects =
+    (absolutePath) => fs.lstatSync(absolutePath).isDirectory() && cmd.checkIfFileExists(absolutePath + '\\.git')
 
-cmd.changeDirectoryTo(path).filter((project) => fs.lstatSync(path + project).isDirectory() && cmd.checkIfFileExists(path + project + '\\.git')).forEach(projectName => {
+cmd.changeDirectoryTo(path).filter((project) => filterForGitProjects(path + project)).forEach(projectName => {
     git(path + projectName).raw(
         [
             'pull',
