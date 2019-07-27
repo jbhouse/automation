@@ -1,28 +1,22 @@
 const git = require('simple-git');
-const fs = require('fs');
-const cdAndLs = require('./cdAndListDirectories');
+const cmd = require('./commandLine');
+const filters = require('./filters.js')
 
-const directoryPath = process.argv[2];
-const directoryFilter = () => fs.lstatSync(directoryPath + file).isDirectory();
+let path = process.argv[2];
 
-cdAndLs.cdAndList(directoryPath, directoryFilter).then((directoryList) =>
-    // filter out everything that isn't a git project
-    directoryList.filter(project => fs.existsSync(directoryPath + project + '\\.git'))
-        .forEach(element => {
-            git(directoryPath + element).raw(
-                [
-                    'pull',
-                    'origin',
-                    'develop'
+filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach(projectName => {
+    git(projectName).raw(
+        [
+            'pull',
+            'origin',
+            'develop'
 
-                ], (err, result) => {
-                    if (Boolean(result)) {
-                        console.log(directoryPath
-                            + project + "---", result);
-                    }
-                    if (Boolean(err)) {
-                        console.log(directoryPath + project + "---", err);
-                    }
-                });
-        })
-)
+        ], (err, result) => {
+            if (Boolean(result)) {
+                console.log(projectName + "---", result);
+            }
+            if (Boolean(err)) {
+                console.log(projectName + "---", err);
+            }
+        });
+});
