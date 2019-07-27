@@ -9,12 +9,13 @@ git(currentWorkingDirectory).raw(
         '-m',
         commitMessage
     ], (err, result) => {
-        console.log();
 
         if (Boolean(result)) {
-            console.log(process.argv[2] + project + "---", result);
+            console.log("yes");
+            console.log(process.argv[2] + "---", result);
         }
         if (Boolean(err)) {
-            console.log(process.argv[2] + project + "---", err);
+            console.log("no");
+            console.log(process.argv[2] + "---", err);
         }
     });
