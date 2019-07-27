@@ -1,19 +1,31 @@
 const git = require('simple-git');
-const commitMessage = process.argv[3];
 const currentWorkingDirectory = process.argv[2];
+var commitMessage = "";
+const branch = require('git-branch');
 
-git(currentWorkingDirectory).raw(
-    [
-        'commit',
-        '.',
-        '-m',
-        commitMessage
-    ], (err, result) => {
+for (let i = 3; i < process.argv.length; i++) {
+    commitMessage += (" " + process.argv[i])
+}
 
-        if (Boolean(result)) {
-            console.log(result);
-        }
-        if (Boolean(err)) {
-            console.log(err);
-        }
-    });
+branch(currentWorkingDirectory)
+    .then(name => {
+        let branchName = name + ":" + commitMessage;
+
+        git(currentWorkingDirectory).raw(
+            [
+                'commit',
+                '.',
+                '-m',
+                branchName
+            ], (err, result) => {
+
+                if (Boolean(result)) {
+                    console.log(result);
+                }
+                if (Boolean(err)) {
+                    console.log(err);
+                }
+            });
+    }) //=> 'master'
+    .catch(console.error);
+
