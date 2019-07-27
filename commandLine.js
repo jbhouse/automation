@@ -10,7 +10,4 @@ module.exports = {
     },
 
     checkIfFileExists: (absolutePathOfFile) => fs.existsSync(absolutePathOfFile),
-
-    changeDirectoryAndReturnFilteredResults: (absolutePath, givenFilter) =>
-        fs.readdirSync(absolutePath).filter(project => givenFilter(absolutePath + project))
 }
