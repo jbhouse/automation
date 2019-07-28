@@ -27,6 +27,7 @@
     "@types/express": "^4.17.0",
     "express": "^4.17.1",
     "git-branch": "^2.0.1",
+    "maven": "^4.6.0",
     "parse-git-config": "^3.0.0",
     "simple-git": "^1.122.0",
     "ts-node-dev": "^1.0.0-pre.40",
