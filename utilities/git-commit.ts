@@ -1,4 +1,4 @@
-const git = require('simple-git');
+var git = require('simple-git');
 const currentWorkingDirectory = process.argv[2];
 var commitMessage = "";
 const branch = require('git-branch');
@@ -8,7 +8,7 @@ for (let i = 3; i < process.argv.length; i++) {
 }
 
 branch(currentWorkingDirectory)
-    .then(name => {
+    .then((name: string) => {
         let branchName = name + ":" + commitMessage;
 
         git(currentWorkingDirectory).raw(
@@ -17,7 +17,7 @@ branch(currentWorkingDirectory)
                 '.',
                 '-m',
                 branchName
-            ], (err, result) => {
+            ], (err: string, result: string) => {
 
                 if (Boolean(result)) {
                     console.log(result);
