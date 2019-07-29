@@ -5,11 +5,18 @@ var parser = new xml2js.Parser({ attrkey: "ATTR" });
 // this example reads the file synchronously
 // you can read it asynchronously also
 var xml_string = fs.readFileSync(process.argv[2], "utf8");
-parser.parseString(xml_string, function (error, result) {
-    if (error === null) {
-        console.log(result);
-    }
-    else {
-        console.log(error);
-    }
+var result = xml_string.replace("<directory>${project.basedir}/target</directory>", '<directory>${project.basedir}/targeted</directory>');
+fs.writeFile(process.argv[2], result, 'utf8', function (err) {
+    if (err)
+        return console.log(err);
 });
+// parser.parseString(xml_string, function (error: string, result: any) {
+//     if (error === null) {
+//         console.log(result['project']['build'][0]['directory'][0]);
+//         result['project']['build'][0]['directory'][0] = "./target";
+//         console.log(result['project']['build'][0]['directory'][0]);
+//     }
+//     else {
+//         console.log(error);
+//     }
+// });
