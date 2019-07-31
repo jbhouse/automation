@@ -1,5 +1,5 @@
-class versionUpgradeObject {
-    constructor(projectName: string, branchName: string, dependency: dependency, updateConsumersVersion: string[]) {
+class VersionUpgradeObject {
+    constructor(projectName: string, branchName: string, dependency: Dependency, updateConsumersVersion: string[]) {
         this.projectName = projectName;
         this.branchName = branchName;
         this.dependency = dependency;
@@ -7,7 +7,7 @@ class versionUpgradeObject {
     }
     projectName: string;
     branchName: string;
-    dependency: dependency;
+    dependency: Dependency;
     // check for any apps listed in here, and update to the given version
     updateConsumersVersion: string[];
 }
