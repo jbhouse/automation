@@ -29,7 +29,7 @@
   </pluginRepositories>
  
   <build>
-    <somethingOld>11</somethingOld>
+    <somethingRandom>55</somethingRandom>
     <outputDirectory>${project.build.directory}/classes</outputDirectory>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>

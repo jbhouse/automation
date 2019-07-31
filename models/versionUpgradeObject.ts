@@ -1,13 +1,7 @@
-class VersionUpgradeObject {
-    constructor(projectName: string, branchName: string, dependency: Dependency, updateConsumersVersion: string[]) {
-        this.projectName = projectName;
-        this.branchName = branchName;
-        this.dependency = dependency;
-        this.updateConsumersVersion = updateConsumersVersion;
-    }
+interface VersionUpgradeObject {
     projectName: string;
     branchName: string;
-    dependency: Dependency;
+    xmlTag: Tag;
     // check for any apps listed in here, and update to the given version
     updateConsumersVersion: string[];
 }

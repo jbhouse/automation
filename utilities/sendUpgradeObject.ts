@@ -1,16 +1,15 @@
 // var { VersionUpgradeObject } = require("../models/VersionUpgradeObject");
 var parseXML = require('./parseXML');
-var upgradeDependency = require('../models/dependency');
-var existingVersion = {
+var existingVersion: VersionUpgradeObject = {
     "projectName": "projectName",
     "branchName": "branchName",
-    "dependency": { "name": "somethingNew", "version": 21 },
+    "xmlTag": { "name": "somethingOld", "version": 11 },
     "updateConsumersVersion": []
 };
-var newVersion = {
+var newVersion: VersionUpgradeObject = {
     "projectName": "projectName",
     "branchName": "branchName",
-    "dependency": { "name": "somethingOld", "version": 11 },
+    "xmlTag": { "name": "somethingRandom", "version": 55 },
     "updateConsumersVersion": []
 };
 

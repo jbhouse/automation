@@ -1,13 +1,11 @@
 "use strict";
-// var { VersionUpgradeObject } = require("../models/VersionUpgradeObject");
 var xml2js = require('xml2js');
 var fs = require('fs');
-// var jsonxml = require('jsontoxml');
 var parser = new xml2js.Parser({ attrkey: "ATTR" });
 module.exports = {
     changeDependencyVersions: function (fileLocation, existingDependency, newDependency) {
         var xml_string = fs.readFileSync(fileLocation, "utf8");
-        var result = xml_string.replace("<" + existingDependency.dependency.name + ">" + existingDependency.dependency.version + "</" + existingDependency.dependency.name + ">", "<" + newDependency.dependency.name + ">" + newDependency.dependency.version + "</" + newDependency.dependency.name + ">");
+        var result = xml_string.replace("<" + existingDependency.xmlTag.name + ">" + existingDependency.xmlTag.version + "</" + existingDependency.xmlTag.name + ">", "<" + newDependency.xmlTag.name + ">" + newDependency.xmlTag.version + "</" + newDependency.xmlTag.name + ">");
         fs.writeFile(process.argv[2], result, 'utf8', function (err) {
             console.log("done parsing xml");
             if (err)
@@ -15,13 +13,3 @@ module.exports = {
         });
     }
 };
-// parser.parseString(xml_string, function (error: string, result: any) {
-//     if (error === null) {
-//         console.log(result['project']['build'][0]['directory'][0]);
-//         result['project']['build'][0]['directory'][0] = "./target";
-//         console.log(result['project']['build'][0]['directory'][0]);
-//     }
-//     else {
-//         console.log(error);
-//     }
-// });
