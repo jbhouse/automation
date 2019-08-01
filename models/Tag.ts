@@ -1,5 +1,5 @@
 interface Tag {
-    name?: string;
-    version?: number;
-    subTag?: Tag;
+    name: string;
+    version?: string;
+    subTags: Tag[];
 }
