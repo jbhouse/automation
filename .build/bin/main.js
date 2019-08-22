@@ -6,5 +6,8 @@ var commandMap = {
     "gitPull": function () { return gitCommands.pull(process.argv[3], process.argv[4]); },
     "gitCommit": function () { return gitCommands.commit(process.argv[3], process.argv.slice(4)); },
     "goToGithub": function () { return gitCommands.goToGithub(process.argv[3]); }
+    // ,"openPR": () => gitCommands.openPR(process.argv[3])
+    ,
+    "openPR": function () { return gitCommands.openPR(process.argv[3]); }
 };
 commandMap[commandToInvoke]();
