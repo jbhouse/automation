@@ -9,7 +9,7 @@ module.exports = {
     openPR: (executablePath: string) => {
 
         require('child_process').exec('git branch', function (err: string, stdout: string) {
-            pullRequestUrl += stdout.split(' ')[1];
+            pullRequestUrl += stdout.split('*')[1].split('\n')[0].trim();
 
             child(executablePath, [pullRequestUrl], function (err: string, data: string) {
                 if (err) {
@@ -17,7 +17,6 @@ module.exports = {
                     return;
                 }
             })
-
         });
     }
 }

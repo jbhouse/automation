@@ -7,7 +7,7 @@ var pullRequestUrl = gitUrl.substring(0, gitUrl.length - 4) + "\\pull\\new\\";
 module.exports = {
     openPR: function (executablePath) {
         require('child_process').exec('git branch', function (err, stdout) {
-            pullRequestUrl += stdout.split(' ')[1];
+            pullRequestUrl += stdout.split('*')[1].split('\n')[0].trim();
             child(executablePath, [pullRequestUrl], function (err, data) {
                 if (err) {
                     console.error(err);
