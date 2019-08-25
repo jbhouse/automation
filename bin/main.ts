@@ -8,7 +8,9 @@ let commandMap: any = {
     , "goToGithub": () => gitCommands.goToGithub(process.argv[3])
     , "openPR": () => gitCommands.openPR(process.argv[3])
     , "parseBranch": () => gitCommands.parseBranch(process.argv[3])
-    , "commitBranchName": () => gitCommands.parseBranch(process.argv[3]).then((branchName: string) => gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" ")))
+    , "commitBranchName": () => gitCommands.parseBranch(process.argv[3])
+        .then((branchName: string) =>
+            gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" ")))
 }
 
 commandMap[commandToInvoke]();

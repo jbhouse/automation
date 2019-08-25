@@ -8,6 +8,9 @@ var commandMap = {
     "goToGithub": function () { return gitCommands.goToGithub(process.argv[3]); },
     "openPR": function () { return gitCommands.openPR(process.argv[3]); },
     "parseBranch": function () { return gitCommands.parseBranch(process.argv[3]); },
-    "commitBranchName": function () { return gitCommands.parseBranch(process.argv[3]).then(function (branchName) { return gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" ")); }); }
+    "commitBranchName": function () { return gitCommands.parseBranch(process.argv[3])
+        .then(function (branchName) {
+        return gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" "));
+    }); }
 };
 commandMap[commandToInvoke]();
