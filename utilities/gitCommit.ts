@@ -9,12 +9,7 @@ module.exports = {
         return git(pathName).raw(
             ['commit', '.', '-m', commitMessage],
             (err: string, result: string) => {
-                if (Boolean(result)) {
-                    console.log(result);
-                }
-                if (Boolean(err)) {
-                    console.log(err);
-                }
+                Boolean(result) ? console.log(result) : console.log(err);
             });
     }
 }

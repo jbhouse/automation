@@ -5,18 +5,8 @@ var cmd = require('./commandLine');
 module.exports = {
     gitUpdate: (path: string) => filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach((projectName: string) => {
         git(projectName).raw(
-            [
-                'pull',
-                'origin',
-                'develop'
-
-            ], (err: string, result: string) => {
-                if (Boolean(result)) {
-                    console.log(projectName + "---", result);
-                }
-                if (Boolean(err)) {
-                    console.log(projectName + "---", err);
-                }
+            ['pull', 'origin', 'develop'], (err: string, result: string) => {
+                Boolean(result) ? console.log(projectName + "---", result) : console.log(projectName + "---", err)
             });
     })
 

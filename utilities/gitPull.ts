@@ -7,19 +7,9 @@ module.exports = {
             branchName = givenBranchName;
         }
         git(workingDirectory).raw(
-            [
-                'pull',
-                'origin',
-                branchName
-            ],
+            ['pull', 'origin', branchName],
             (err: string, result: string) => {
-                if (Boolean(result)) {
-                    console.log("git pull origin " + branchName);
-                    console.log(result);
-                }
-                if (Boolean(err)) {
-                    console.log(err);
-                }
+                Boolean(result) ? console.log(result) : console.log(err)
             }
         );
     }
