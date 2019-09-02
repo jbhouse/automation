@@ -1,6 +1,12 @@
 var gitCommands = require('../utilities/git');
 var dailyUpdate = require('../utilities/taskIncrementor');
+var cliUtils = require('../utilities/cliUtils')
 let commandToInvoke: string = process.argv[2];
+
+// console.log(process.argv.slice(4).join(" "));
+// console.log(process.argv[3]);
+// console.log(process.argv[4]);
+// console.log(process.argv[5]);
 
 let commandMap: any = {
     "gitUpdate": () => gitCommands.update(process.argv[3])
@@ -13,6 +19,7 @@ let commandMap: any = {
         .then((branchName: string) =>
             gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" ")))
     , "dailyUpdate": () => dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update)
+    , "google": () => cliUtils.google(process.argv[3], process.argv.slice(4).join("+"))
 }
 
 commandMap[commandToInvoke]();
