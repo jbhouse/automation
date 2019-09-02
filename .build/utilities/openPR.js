@@ -1,19 +1,10 @@
 "use strict";
-var parse = require('parse-git-config');
-var child = require('child_process').execFile;
-var git = require('simple-git');
-var gitUrl = parse.sync()['remote "origin"']['url'];
-var pullRequestUrl = gitUrl.substring(0, gitUrl.length - 4) + "\\pull\\new\\";
+var google = require('./google');
 module.exports = {
-    openPR: function (executablePath) {
+    openPR: function (executablePath, pullRequestUrl) {
         require('child_process').exec('git branch', function (err, stdout) {
-            pullRequestUrl += stdout.split('*')[1].split('\n')[0].trim();
-            child(executablePath, [pullRequestUrl], function (err, data) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-            });
+            pullRequestUrl += "\\pull\\new\\" + stdout.split('*')[1].split('\n')[0].trim();
+            google.searchGoogle(executablePath, pullRequestUrl);
         });
     }
 };
