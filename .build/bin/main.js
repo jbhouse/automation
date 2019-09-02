@@ -1,7 +1,12 @@
 "use strict";
 var gitCommands = require('../utilities/git');
 var dailyUpdate = require('../utilities/taskIncrementor');
+var cliUtils = require('../utilities/cliUtils');
 var commandToInvoke = process.argv[2];
+// console.log(process.argv.slice(4).join(" "));
+// console.log(process.argv[3]);
+// console.log(process.argv[4]);
+// console.log(process.argv[5]);
 var commandMap = {
     "gitUpdate": function () { return gitCommands.update(process.argv[3]); },
     "gitPull": function () { return gitCommands.pull(process.argv[3], process.argv[4]); },
@@ -13,6 +18,7 @@ var commandMap = {
         .then(function (branchName) {
         return gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" "));
     }); },
-    "dailyUpdate": function () { return dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update); }
+    "dailyUpdate": function () { return dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update); },
+    "google": function () { return cliUtils.google(process.argv[3], process.argv.slice(4).join("+")); }
 };
 commandMap[commandToInvoke]();
