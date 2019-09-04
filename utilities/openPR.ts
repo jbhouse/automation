@@ -1,22 +1,12 @@
-var parse = require('parse-git-config');
-var child = require('child_process').execFile;
-var git = require('simple-git');
-
-var gitUrl = parse.sync()['remote "origin"']['url'];
-var pullRequestUrl: string = gitUrl.substring(0, gitUrl.length - 4) + "\\pull\\new\\";
+var google = require('./google')
 
 module.exports = {
-    openPR: (executablePath: string) => {
+    openPR: (executablePath: string, pullRequestUrl: string) => {
 
         require('child_process').exec('git branch', function (err: string, stdout: string) {
-            pullRequestUrl += stdout.split('*')[1].split('\n')[0].trim();
+            pullRequestUrl += "\\pull\\new\\" + stdout.split('*')[1].split('\n')[0].trim();
 
-            child(executablePath, [pullRequestUrl], function (err: string, data: string) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-            })
+            google.searchGoogle(executablePath, pullRequestUrl)
         });
     }
 }
