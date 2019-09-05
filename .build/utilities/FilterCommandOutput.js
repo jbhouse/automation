@@ -1,10 +1,10 @@
 "use strict";
 var exec = require('child_process').exec;
 module.exports = {
-    filterOutput: function (filterKeyword) { return filterOutputByKeyword(filterKeyword); }
+    filterOutput: function (command, filterKeyword) { return filterOutputByKeyword(command, filterKeyword); }
 };
-function filterOutputByKeyword(filterKey) {
-    exec("mvn spring-boot:run" + filterKey, function (err, stdout, stderr) {
+function filterOutputByKeyword(command, filterKey) {
+    exec(command + filterKey, function (err, stdout, stderr) {
         if (err) {
             console.log("error: ", err);
             return;

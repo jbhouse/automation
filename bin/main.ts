@@ -15,7 +15,8 @@ let commandMap: any = {
             gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" ")))
     , "dailyUpdate": () => dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update)
     , "google": () => cliUtils.google(process.argv[3], process.argv)
-    , "FilterOutput": () => cliUtils.FilterOutput(" | grep --line-buffered " + process.argv.slice(3).join(" | grep --line-buffered "))
+    , "FilterSpringBootRun": () => cliUtils.FilterOutput("mvn spring-boot:run", " | grep --line-buffered "
+        + process.argv.slice(3).join(" | grep --line-buffered "))
 }
 
 commandMap[commandToInvoke]();
