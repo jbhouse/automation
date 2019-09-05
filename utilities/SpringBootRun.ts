@@ -5,7 +5,7 @@ module.exports = {
 }
 
 function filterOutputByKeyword(filterKey: string) {
-    exec("mvn spring-boot:run | grep --line-buffered INFO", (err: string, stdout: string, stderr: string) => {
+    exec("mvn spring-boot:run" + filterKey, (err: string, stdout: string, stderr: string) => {
         if (err) {
             console.log("error: ", err);
             return;

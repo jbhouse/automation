@@ -15,6 +15,7 @@ var commandMap = {
         return gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" "));
     }); },
     "dailyUpdate": function () { return dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update); },
-    "google": function () { return cliUtils.google(process.argv[3], process.argv); }
+    "google": function () { return cliUtils.google(process.argv[3], process.argv); },
+    "FilterOutput": function () { return cliUtils.FilterOutput(" | grep --line-buffered " + process.argv.slice(3).join(" | grep --line-buffered ")); }
 };
 commandMap[commandToInvoke]();
