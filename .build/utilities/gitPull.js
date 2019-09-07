@@ -1,12 +1,12 @@
 "use strict";
 var git = require('simple-git');
-var branchName = "develop";
+let branchName = "develop";
 module.exports = {
-    gitPull: function (workingDirectory, givenBranchName) {
+    gitPull: (workingDirectory, givenBranchName) => {
         if (Boolean(givenBranchName)) {
             branchName = givenBranchName;
         }
-        git(workingDirectory).raw(['pull', 'origin', branchName], function (err, result) {
+        git(workingDirectory).raw(['pull', 'origin', branchName], (err, result) => {
             Boolean(result) ? console.log(result) : console.log(err);
         });
     }

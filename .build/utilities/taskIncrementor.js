@@ -2,7 +2,7 @@
 var fs = require('fs');
 var file = require('../../taskCounter.json');
 module.exports = {
-    dailyUpdate: function (directoryToUpdate, fn) {
+    dailyUpdate: (directoryToUpdate, fn) => {
         if (new Date().toString().slice(0, 9) != file.updateLastRun) {
             fn(directoryToUpdate);
             file.updateLastRun = new Date().toString().slice(0, 9);

@@ -1,10 +1,10 @@
 "use strict";
 var git = require('simple-git');
-var branch = require('git-branch');
+const branch = require('git-branch');
 module.exports = {
-    parseGitBranch: function (pathName) {
+    parseGitBranch: (pathName) => {
         return branch(pathName)
-            .then(function (name) {
+            .then((name) => {
             return name;
         }) //=> 'master'
             .catch(console.error);

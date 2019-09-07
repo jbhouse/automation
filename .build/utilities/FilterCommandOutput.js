@@ -1,10 +1,10 @@
 "use strict";
-var exec = require('child_process').exec;
+var { exec } = require('child_process');
 module.exports = {
-    filterOutput: function (command, filterKeyword) { return filterOutputByKeyword(command, filterKeyword); }
+    filterOutput: (command, filterKeyword) => filterOutputByKeyword(command, filterKeyword)
 };
 function filterOutputByKeyword(command, filterKey) {
-    exec(command + filterKey, function (err, stdout, stderr) {
+    exec(command + filterKey, (err, stdout, stderr) => {
         if (err) {
             console.log("error: ", err);
             return;

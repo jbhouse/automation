@@ -44,5 +44,5 @@ var newTag = {
 //     console.log("done parsing xml");
 //     if (err) return console.log(err);
 // });
-var pomFileContents = fs.readFileSync(process.argv[2], "utf8");
+let pomFileContents = fs.readFileSync(process.argv[2], "utf8");
 parseXML.changeSubTag(process.argv[2], pomFileContents, pomFileContents, existingTag, newTag);

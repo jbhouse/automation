@@ -1,17 +1,17 @@
 "use strict";
-var gitUpdate = require('../utilities/gitUpdate');
-var gitPull = require('../utilities/gitPull');
-var gitCommit = require('../utilities/gitCommit');
-var GitUrl = require('../utilities/GitUrl');
-var openPr = require('../utilities/openPR');
-var parseBranchName = require('../utilities/parseBranchName');
+let gitUpdate = require('../utilities/gitUpdate');
+let gitPull = require('../utilities/gitPull');
+let gitCommit = require('../utilities/gitCommit');
+let GitUrl = require('../utilities/GitUrl');
+let openPr = require('../utilities/openPR');
+let parseBranchName = require('../utilities/parseBranchName');
 var parse = require('parse-git-config');
 var google = require('./google');
 module.exports = {
-    update: function (path) { return gitUpdate.gitUpdate(path); },
-    pull: function (workingDirectory, branchName) { return gitPull.gitPull(workingDirectory, branchName); },
-    commit: function (workingDirectory, commitMessage) { return gitCommit.gitCommit(workingDirectory, commitMessage); },
-    GitUrl: function (executablePath) { return google.searchGoogle(executablePath, GitUrl.gitUrl()); },
-    openPR: function (executablePath) { return openPr.openPR(executablePath, GitUrl.gitUrl()); },
-    parseBranch: function (executablePath) { return parseBranchName.parseGitBranch(executablePath); }
+    update: (path) => gitUpdate.gitUpdate(path),
+    pull: (workingDirectory, branchName) => gitPull.gitPull(workingDirectory, branchName),
+    commit: (workingDirectory, commitMessage) => gitCommit.gitCommit(workingDirectory, commitMessage),
+    GitUrl: (executablePath) => google.searchGoogle(executablePath, GitUrl.gitUrl()),
+    openPR: (executablePath) => openPr.openPR(executablePath, GitUrl.gitUrl()),
+    parseBranch: (executablePath) => parseBranchName.parseGitBranch(executablePath)
 };
