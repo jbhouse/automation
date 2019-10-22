@@ -1,10 +1,10 @@
-let fs = require('fs');
-let gitCommands = require('../utilities/git').init(fs);
-let dailyUpdate = require('../utilities/taskIncrementor').init(fs);
-let cliUtils = require('../utilities/cliUtils').init();
-let commandToInvoke: string = process.argv[2];
+const fs = require('fs');
+const gitCommands = require('../utilities/git').init(fs);
+const dailyUpdate = require('../utilities/taskIncrementor').init(fs);
+const cliUtils = require('../utilities/cliUtils');
+const commandToInvoke: string = process.argv[2];
 
-let commandMap: any = {
+const commandMap: any = {
         "gitUpdate": () => gitCommands.update(process.argv[3])
         , "gitPull": () => gitCommands.pull(process.argv[3], process.argv[4])
         , "gitCommit": () => gitCommands.commit(process.argv[3], process.argv.slice(4).join(" "))

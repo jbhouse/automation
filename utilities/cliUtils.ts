@@ -1,8 +1,8 @@
-export const init = () => {
-    let g = require('./google').init();
-    let maven = require('./FilterCommandOutput').init();
+module.exports = (() => {
+    const google = require('./google');
+    const maven = require('./FilterCommandOutput');
     return {
-        google: (executablePath: string, query: string[]) => g.searchGoogle(executablePath, "https://www.google.com/search?q=" + query.slice(4).join("+"))
+        google: (executablePath: string, query: string[]) => google.searchGoogle(executablePath, "https://www.google.com/search?q=" + query.slice(4).join("+"))
         , FilterOutput: (command: string, filterKeys: string) => maven.filterOutput(command, filterKeys)
     }
-}
+})();

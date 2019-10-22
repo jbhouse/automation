@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = function (fs) {
-    var gitPull = require('../utilities/gitPull').init();
-    var GitUrl = require('../utilities/GitUrl').init();
-    var parseBranchName = require('../utilities/parseBranchName').init();
-    var gitUpdate = require('../utilities/gitUpdate');
-    var gitCommit = require('../utilities/gitCommit');
-    var openPr = require('../utilities/openPR');
-    var google = require('./google').init();
-    var git = require('simple-git');
+exports.init = (fs) => {
+    const git = require('simple-git');
+    const gitPull = require('../utilities/gitPull').init(git);
+    const gitUrl = require('../utilities/GitUrl');
+    const parseBranchName = require('../utilities/parseBranchName');
+    const gitUpdate = require('../utilities/gitUpdate');
+    const gitCommit = require('../utilities/gitCommit');
+    const openPr = require('../utilities/openPR');
+    const google = require('./google');
     return {
-        update: function (path) { return gitUpdate.init(fs, git).gitUpdate(path); },
-        pull: function (workingDirectory, branchName) { return gitPull.init(git).gitPull(workingDirectory, branchName); },
-        commit: function (workingDirectory, commitMessage) { return gitCommit.init(git).gitCommit(workingDirectory, commitMessage); },
-        GitUrl: function (executablePath) { return google.searchGoogle(executablePath, GitUrl.gitUrl()); },
-        openPR: function (executablePath) { return openPr.openPR(executablePath, GitUrl.gitUrl(), google.searchGoogle); },
-        parseBranch: function (executablePath) { return parseBranchName.parseGitBranch(executablePath); }
+        update: (path) => gitUpdate.init(fs, git).gitUpdate(path),
+        pull: (workingDirectory, branchName) => gitPull.init(git).gitPull(workingDirectory, branchName),
+        commit: (workingDirectory, commitMessage) => gitCommit.init(git).gitCommit(workingDirectory, commitMessage),
+        GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
+        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle),
+        parseBranch: (executablePath) => parseBranchName.parseGitBranch(executablePath)
     };
 };

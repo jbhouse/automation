@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = function (fs) { return ({
-    changeDirectoryTo: function (directoryPath) { return fs.readdirSync(directoryPath).map(function (project) { return directoryPath + project; }); },
-    checkIfFileExists: function (absolutePathOfFile) { return fs.existsSync(absolutePathOfFile); }
-}); };
+exports.init = (fs) => ({
+    changeDirectoryTo: (directoryPath) => fs.readdirSync(directoryPath).map((project) => directoryPath + project),
+    checkIfFileExists: (absolutePathOfFile) => fs.existsSync(absolutePathOfFile)
+});

@@ -1,5 +1,5 @@
-export const init = () => {
-    let { exec } = require('child_process');
+module.exports = (() => {
+    const { exec } = require('child_process');
     return {
         filterOutput: (command: string, filterKey: string) => {
             exec(command + filterKey, (err: string, stdout: string, stderr: string) => {
@@ -12,4 +12,4 @@ export const init = () => {
             })
         }
     }
-}
+})();

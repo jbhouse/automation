@@ -1,10 +1,9 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = function () {
-    var exec = require('child_process').exec;
+module.exports = (() => {
+    const { exec } = require('child_process');
     return {
-        filterOutput: function (command, filterKey) {
-            exec(command + filterKey, function (err, stdout, stderr) {
+        filterOutput: (command, filterKey) => {
+            exec(command + filterKey, (err, stdout, stderr) => {
                 if (err) {
                     console.log("error: ", err);
                     return;
@@ -14,4 +13,4 @@ exports.init = function () {
             });
         }
     };
-};
+})();

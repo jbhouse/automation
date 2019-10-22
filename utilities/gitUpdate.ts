@@ -1,6 +1,6 @@
 export const init = (fs: any, git: any) => {
-    let cmd = require('./commandLine').init(fs);
-    let filters = require('./filters').init(fs);
+    const cmd = require('./commandLine').init(fs);
+    const filters = require('./filters').init(fs);
     return {
         gitUpdate: (path: string) => {
             console.log("Updating git repos");

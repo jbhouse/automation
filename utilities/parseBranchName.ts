@@ -1,4 +1,4 @@
-export const init = () => {
+module.exports = (() => {
     const branch = require('git-branch');
     return {
         parseGitBranch: (pathName: string) => {
@@ -9,4 +9,4 @@ export const init = () => {
                 .catch(console.error);
         }
     }
-}
+})();

@@ -1,14 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = function () {
-    var branch = require('git-branch');
+module.exports = (() => {
+    const branch = require('git-branch');
     return {
-        parseGitBranch: function (pathName) {
+        parseGitBranch: (pathName) => {
             return branch(pathName)
-                .then(function (name) {
+                .then((name) => {
                 return name;
             }) //=> 'master'
                 .catch(console.error);
         }
     };
-};
+})();
