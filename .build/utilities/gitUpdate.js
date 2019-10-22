@@ -1,19 +1,16 @@
 "use strict";
-var filters = require('./filters.js');
-var git = require('simple-git');
-var cmd = require('./commandLine');
-var path = process.argv[2];
-filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach(function (projectName) {
-    git(projectName).raw([
-        'pull',
-        'origin',
-        'develop'
-    ], function (err, result) {
-        if (Boolean(result)) {
-            console.log(projectName + "---", result);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.init = (fs, git) => {
+    const cmd = require('./commandLine').init(fs);
+    const filters = require('./filters').init(fs);
+    return {
+        gitUpdate: (path) => {
+            console.log("Updating git repos");
+            filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach((projectName) => {
+                git(projectName).raw(['pull', 'origin', 'develop'], (err, result) => {
+                    Boolean(result) ? console.log(projectName + "---", result) : console.log(projectName + "---", err);
+                });
+            });
         }
-        if (Boolean(err)) {
-            console.log(projectName + "---", err);
-        }
-    });
-});
+    };
+};
