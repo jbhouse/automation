@@ -1,10 +1,10 @@
 "use strict";
-var commandLineActions = require('./commandLine');
-var google = require('./google');
-var maven = require('./FilterCommandOutput');
-module.exports = {
-    changeDirectoryTo: function (directoryPath) { return commandLineActions.changeDirectoryTo(directoryPath); },
-    checkIfFileExists: function (absoluteFilePath) { return commandLineActions.checkIfFileExists(absoluteFilePath); },
-    google: function (executablePath, query) { return google.searchGoogle(executablePath, "https://www.google.com/search?q=" + query.slice(4).join("+")); },
-    FilterOutput: function (command, filterKeys) { return maven.filterOutput(command, filterKeys); }
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.init = function () {
+    var g = require('./google').init();
+    var maven = require('./FilterCommandOutput');
+    return {
+        google: function (executablePath, query) { return g.searchGoogle(executablePath, "https://www.google.com/search?q=" + query.slice(4).join("+")); },
+        FilterOutput: function (command, filterKeys) { return maven.filterOutput(command, filterKeys); }
+    };
 };

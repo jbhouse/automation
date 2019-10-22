@@ -1,7 +1,8 @@
 "use strict";
-var gitCommands = require('../utilities/git');
-var dailyUpdate = require('../utilities/taskIncrementor');
-var cliUtils = require('../utilities/cliUtils');
+var fs = require('fs');
+var gitCommands = require('../utilities/git').init(fs);
+var dailyUpdate = require('../utilities/taskIncrementor').init(fs);
+var cliUtils = require('../utilities/cliUtils').init();
 var commandToInvoke = process.argv[2];
 var commandMap = {
     "gitUpdate": function () { return gitCommands.update(process.argv[3]); },
@@ -14,7 +15,7 @@ var commandMap = {
         .then(function (branchName) {
         return gitCommands.commit(process.argv[3], branchName + ": " + process.argv.slice(4).join(" "));
     }); },
-    "dailyUpdate": function () { return dailyUpdate.dailyUpdate(process.argv[3], gitCommands.update); },
+    "dailyUpdate": function () { return dailyUpdate.update(process.argv[3], gitCommands.update); },
     "google": function () { return cliUtils.google(process.argv[3], process.argv); },
     "FilterMavenCommand": function () { return cliUtils.FilterOutput(process.argv[3], " | grep --line-buffered "
         + process.argv.slice(4).join(" | grep --line-buffered ")); }
