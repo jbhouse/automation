@@ -5,8 +5,8 @@ export const init = (fs: any) => {
     let gitUpdate = require('../utilities/gitUpdate');
     let gitCommit = require('../utilities/gitCommit');
     let openPr = require('../utilities/openPR');
-    var google = require('./google').init();
-    var git = require('simple-git');
+    let google = require('./google').init();
+    let git = require('simple-git');
     return {
         update: (path: string) => gitUpdate.init(fs, git).gitUpdate(path)
         , pull: (workingDirectory: string, branchName: string) => gitPull.init(git).gitPull(workingDirectory, branchName)

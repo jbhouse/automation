@@ -1,7 +1,7 @@
-var fs = require('fs');
-var gitCommands = require('../utilities/git').init(fs);
-var dailyUpdate = require('../utilities/taskIncrementor').init(fs);
-var cliUtils = require('../utilities/cliUtils').init();
+let fs = require('fs');
+let gitCommands = require('../utilities/git').init(fs);
+let dailyUpdate = require('../utilities/taskIncrementor').init(fs);
+let cliUtils = require('../utilities/cliUtils').init();
 let commandToInvoke: string = process.argv[2];
 
 let commandMap: any = {

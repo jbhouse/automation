@@ -1,5 +1,5 @@
 export const init = (fs: any) => {
-    var file = require('../../taskCounter.json');
+    let file = require('../../taskCounter.json');
     return {
         update: (directoryToUpdate: string, fn: any) => {
             if (new Date().toString().slice(0, 9) != file.updateLastRun) {
