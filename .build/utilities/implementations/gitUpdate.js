@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.init = (fs, git) => {
     const cmd = require('./commandLine').init(fs);
-    const filters = require('./filters').init(fs);
+    const filters = require('../filters').init(fs);
     return {
         gitUpdate: (path) => {
             console.log("Updating git repos");

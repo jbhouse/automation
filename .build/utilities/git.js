@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.init = (fs) => {
     const git = require('simple-git');
-    const gitPull = require('../utilities/gitPull');
-    const gitUrl = require('../utilities/GitUrl');
-    const gitUpdate = require('../utilities/gitUpdate');
-    const gitCommit = require('../utilities/gitCommit');
-    const gitPopStash = require('../utilities/git-pop-stash-by-name');
-    const parseBranchName = require('../utilities/parseBranchName');
-    const openPr = require('../utilities/openPR');
-    const google = require('./google');
+    const gitPull = require('./implementations/gitPull');
+    const gitUrl = require('./implementations/gitUrl');
+    const gitUpdate = require('./implementations/gitUpdate');
+    const gitCommit = require('./implementations/gitCommit');
+    const gitPopStash = require('./implementations/git-pop-stash-by-name');
+    const parseBranchName = require('./implementations/parseBranchName');
+    const openPr = require('./implementations/openPR');
+    const google = require('./implementations/google');
     return {
         update: (path) => gitUpdate.init(fs, git).gitUpdate(path),
         pull: (workingDirectory, branchName) => gitPull.init(git).gitPull(workingDirectory, branchName),

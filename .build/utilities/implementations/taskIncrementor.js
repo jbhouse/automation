@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.init = (fs) => {
-    const file = require('../../taskCounter.json');
+    const file = require('../../../taskCounter.json');
     return {
         update: (directoryToUpdate, fn) => {
             if (new Date().toString().slice(0, 9) != file.updateLastRun) {

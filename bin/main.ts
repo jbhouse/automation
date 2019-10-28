@@ -1,6 +1,6 @@
 const fs = require('fs');
 const gitCommands = require('../utilities/git').init(fs);
-const dailyUpdate = require('../utilities/taskIncrementor').init(fs);
+const dailyUpdate = require('../utilities/implementations/taskIncrementor').init(fs);
 const cliUtils = require('../utilities/cliUtils');
 const commandToInvoke: string = process.argv[2];
 
