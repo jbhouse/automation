@@ -1,12 +1,6 @@
-module.exports = (() => {
-    const branch = require('git-branch');
-    return {
-        parseGitBranch: (pathName: string) => {
-            return branch(pathName)
-                .then((name: string) => {
-                    return name;
-                }) //=> 'master'
-                .catch(console.error);
-        }
-    }
-})();
+module.exports = {
+    parseGitBranch: (pathName: string) =>
+        require('git-branch')(pathName)
+            .then((name: string) => name)
+            .catch(console.error)
+}
