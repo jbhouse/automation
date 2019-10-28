@@ -1,9 +1,6 @@
-module.exports = (() => {
-    const parse = require('parse-git-config');
-    return {
+module.exports = {
         gitUrl: () => {
-            const gitUrl = parse.sync()['remote "origin"']['url'];
+            const gitUrl = require('parse-git-config').sync()['remote "origin"']['url'];
             return gitUrl.substring(0, gitUrl.length - 4);
         }
     }
-})();

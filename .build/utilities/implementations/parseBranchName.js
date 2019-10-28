@@ -1,13 +1,6 @@
 "use strict";
-module.exports = (() => {
-    const branch = require('git-branch');
-    return {
-        parseGitBranch: (pathName) => {
-            return branch(pathName)
-                .then((name) => {
-                return name;
-            }) //=> 'master'
-                .catch(console.error);
-        }
-    };
-})();
+module.exports = {
+    parseGitBranch: (pathName) => require('git-branch')(pathName)
+        .then((name) => name)
+        .catch(console.error)
+};
