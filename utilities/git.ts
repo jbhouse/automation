@@ -1,4 +1,4 @@
-export const init = (fs: any) => {
+module.exports = (fs: any) => {
     const git = require('simple-git');
     const gitPull = require('./implementations/gitPull');
     const gitUrl = require('./implementations/gitUrl');
@@ -8,13 +8,16 @@ export const init = (fs: any) => {
     const parseBranchName = require('./implementations/parseBranchName');
     const openPr = require('./implementations/openPR');
     const google = require('./implementations/google');
+    const cmd = require('./implementations/commandLine')(fs);
+    const filters = require('./filters')(cmd);
+
     return {
-        update: (path: string) => gitUpdate.init(fs, git).gitUpdate(path)
-        , pull: (workingDirectory: string, branchName: string) => gitPull.init(git).gitPull(workingDirectory, branchName)
-        , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit.init(git).gitCommit(workingDirectory, commitMessage)
+        update: (path: string) => gitUpdate(cmd, filters, git).gitUpdate(path)
+        , pull: (workingDirectory: string, branchName: string) => gitPull(git).gitPull(workingDirectory, branchName)
+        , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit(git).gitCommit(workingDirectory, commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl.gitUrl())
         , openPR: (executablePath: string) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle)
         , parseBranch: (executablePath: string) => parseBranchName.parseGitBranch(executablePath)
-        , popStashByName: (workingDirectory: string, stashName: string) => gitPopStash.init(git).popStash(workingDirectory, stashName)
+        , popStashByName: (workingDirectory: string, stashName: string) => gitPopStash(git).popStash(workingDirectory, stashName)
     }
 }

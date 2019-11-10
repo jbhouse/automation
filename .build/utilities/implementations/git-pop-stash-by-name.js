@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = (git) => {
+module.exports = (git) => {
     let parseGitStashList = function (stashList, stashMessage, workingDirectory) {
         let listOfStashMessages = stashList.split("\n");
         let stashMessagesContainingInput = listOfStashMessages.filter(msg => msg.includes(stashMessage));

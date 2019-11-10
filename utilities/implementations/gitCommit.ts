@@ -1,4 +1,4 @@
-export const init = (git: any) => {
+module.exports = (git: any) => {
     return {
         gitCommit: (pathName: string, commitMessage: string) => {
             /*

@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = (fs) => {
+module.exports = (fs) => {
     const git = require('simple-git');
     const gitPull = require('./implementations/gitPull');
     const gitUrl = require('./implementations/gitUrl');
@@ -10,13 +9,15 @@ exports.init = (fs) => {
     const parseBranchName = require('./implementations/parseBranchName');
     const openPr = require('./implementations/openPR');
     const google = require('./implementations/google');
+    const cmd = require('./implementations/commandLine')(fs);
+    const filters = require('./filters')(cmd);
     return {
-        update: (path) => gitUpdate.init(fs, git).gitUpdate(path),
-        pull: (workingDirectory, branchName) => gitPull.init(git).gitPull(workingDirectory, branchName),
-        commit: (workingDirectory, commitMessage) => gitCommit.init(git).gitCommit(workingDirectory, commitMessage),
+        update: (path) => gitUpdate(cmd, filters, git).gitUpdate(path),
+        pull: (workingDirectory, branchName) => gitPull(git).gitPull(workingDirectory, branchName),
+        commit: (workingDirectory, commitMessage) => gitCommit(git).gitCommit(workingDirectory, commitMessage),
         GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
         openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle),
         parseBranch: (executablePath) => parseBranchName.parseGitBranch(executablePath),
-        popStashByName: (workingDirectory, stashName) => gitPopStash.init(git).popStash(workingDirectory, stashName)
+        popStashByName: (workingDirectory, stashName) => gitPopStash(git).popStash(workingDirectory, stashName)
     };
 };

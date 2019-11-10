@@ -1,7 +1,7 @@
 "use strict";
 const fs = require('fs');
-const gitCommands = require('../utilities/git').init(fs);
-const dailyUpdate = require('../utilities/implementations/taskIncrementor').init(fs);
+const gitCommands = require('../utilities/git')(fs);
+const dailyUpdate = require('../utilities/implementations/taskIncrementor')(fs);
 const cliUtils = require('../utilities/cliUtils');
 const commandToInvoke = process.argv[2];
 const commandMap = {

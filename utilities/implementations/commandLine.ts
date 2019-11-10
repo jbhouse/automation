@@ -1,4 +1,8 @@
-export const init = (fs: any) => ({
-    changeDirectoryTo: (directoryPath: string) => fs.readdirSync(directoryPath).map((project: string) => directoryPath + project),
-    checkIfFileExists: (absolutePathOfFile: string) => fs.existsSync(absolutePathOfFile)
-})
+module.exports = (fs: any) => {
+    return ({
+        "checkIfFileExists": checkIfFileExists,
+        "changeDirectoryTo": changeDirectoryTo
+    });
+    function changeDirectoryTo(directoryPath: string) { fs.readdirSync(directoryPath).map((project: string) => directoryPath + project) }
+    function checkIfFileExists(absolutePathOfFile: string) { fs.existsSync(absolutePathOfFile) }
+}

@@ -1,4 +1,4 @@
-export const init = (git: any) => {
+module.exports = (git: any) => {
     let parseGitStashList = function (stashList: string, stashMessage: string, workingDirectory: string) {
         let listOfStashMessages: string[] = stashList.split("\n");
         let stashMessagesContainingInput: string[] = listOfStashMessages.filter(msg => msg.includes(stashMessage));
