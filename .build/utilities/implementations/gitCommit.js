@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = (git) => {
+module.exports = (git) => {
     return {
         gitCommit: (pathName, commitMessage) => {
             /*

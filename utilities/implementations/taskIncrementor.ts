@@ -1,4 +1,4 @@
-export const init = (fs: any) => {
+module.exports = (fs: any) => {
     const file = require('../../../taskCounter.json');
     return {
         update: (directoryToUpdate: string, fn: any) => {

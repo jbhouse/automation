@@ -1,8 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = (fs, git) => {
-    const cmd = require('./commandLine').init(fs);
-    const filters = require('../filters').init(fs);
+module.exports = (cmd, filters, git) => {
     return {
         gitUpdate: (path) => {
             console.log("Updating git repos");

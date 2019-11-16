@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = (fs) => {
+module.exports = (fs) => {
     const file = require('../../../taskCounter.json');
     return {
         update: (directoryToUpdate, fn) => {
