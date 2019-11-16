@@ -9,7 +9,7 @@ module.exports = (git: any) => {
         } else {
             let stashToApply = "stash@{" + listOfStashMessages.indexOf(stashMessagesContainingInput[0]) + "}";
             git(workingDirectory).raw(['stash', 'apply', stashToApply],
-                (err: string, result: string) => Boolean(result) ? console.log(err) : console.log(err)
+                (err: string, result: string) => Boolean(result) ? console.log(result) : console.log(err)
 
             );
         }
@@ -18,9 +18,8 @@ module.exports = (git: any) => {
         popStash: (workingDirectory: string, stashMessage: string) => {
             git(workingDirectory).raw(
                 ['stash', 'list'],
-                (err: string, result: string) => {
+                (err: string, result: string) =>
                     Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err)
-                }
             );
         }
     }

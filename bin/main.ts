@@ -6,6 +6,7 @@ const commandToInvoke: string = process.argv[2];
 
 const commandMap: any = {
         "gitUpdate": () => gitCommands.update(process.argv[3])
+        , "gitCheckout": () => gitCommands.checkout(process.argv[3], process.argv[4])
         , "popStashByName": () => gitCommands.popStashByName(process.argv[3], process.argv.slice(4).join(" "))
         , "gitPull": () => gitCommands.pull(process.argv[3], process.argv[4])
         , "gitCommit": () => gitCommands.commit(process.argv[3], process.argv.slice(4).join(" "))

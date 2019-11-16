@@ -11,14 +11,12 @@ module.exports = (git) => {
         }
         else {
             let stashToApply = "stash@{" + listOfStashMessages.indexOf(stashMessagesContainingInput[0]) + "}";
-            git(workingDirectory).raw(['stash', 'apply', stashToApply], (err, result) => Boolean(result) ? console.log(err) : console.log(err));
+            git(workingDirectory).raw(['stash', 'apply', stashToApply], (err, result) => Boolean(result) ? console.log(result) : console.log(err));
         }
     };
     return {
         popStash: (workingDirectory, stashMessage) => {
-            git(workingDirectory).raw(['stash', 'list'], (err, result) => {
-                Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err);
-            });
+            git(workingDirectory).raw(['stash', 'list'], (err, result) => Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err));
         }
     };
 };

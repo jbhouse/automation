@@ -2,6 +2,7 @@
 module.exports = (fs) => {
     const git = require('simple-git');
     const gitPull = require('./implementations/gitPull');
+    const gitCheckout = require('./implementations/gitCheckout');
     const gitUrl = require('./implementations/gitUrl');
     const gitUpdate = require('./implementations/gitUpdate');
     const gitCommit = require('./implementations/gitCommit');
@@ -13,6 +14,7 @@ module.exports = (fs) => {
     const filters = require('./filters')(cmd);
     return {
         update: (path) => gitUpdate(cmd, filters, git).gitUpdate(path),
+        checkout: (workingDirectory, branchName) => gitCheckout(git).gitCheckout(workingDirectory, branchName),
         pull: (workingDirectory, branchName) => gitPull(git).gitPull(workingDirectory, branchName),
         commit: (workingDirectory, commitMessage) => gitCommit(git).gitCommit(workingDirectory, commitMessage),
         GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
