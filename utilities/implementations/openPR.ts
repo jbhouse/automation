@@ -1,6 +1,9 @@
-module.exports = {
-    openPR: (executablePath: string, pullRequestUrl: string, fn: any) => {
-        require('child_process').exec('git branch', function (err: string, stdout: string) {
+module.exports = (childProcess: any) => {
+
+    return ({ "openPR": openPR })
+
+    function openPR(executablePath: string, pullRequestUrl: string, fn: any) {
+        childProcess.exec('git branch', function (err: string, stdout: string) {
             if (Boolean(err)) {
                 console.log(err);
             } else {

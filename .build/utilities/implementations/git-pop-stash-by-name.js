@@ -1,6 +1,10 @@
 "use strict";
 module.exports = (git) => {
-    let parseGitStashList = function (stashList, stashMessage, workingDirectory) {
+    return ({ "popStash": popStash });
+    function popStash(workingDirectory, stashMessage) {
+        git(workingDirectory).raw(['stash', 'list'], (err, result) => Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err));
+    }
+    function parseGitStashList(stashList, stashMessage, workingDirectory) {
         let listOfStashMessages = stashList.split("\n");
         let stashMessagesContainingInput = listOfStashMessages.filter(msg => msg.includes(stashMessage));
         if (stashMessagesContainingInput.length == 0) {
@@ -13,10 +17,5 @@ module.exports = (git) => {
             let stashToApply = "stash@{" + listOfStashMessages.indexOf(stashMessagesContainingInput[0]) + "}";
             git(workingDirectory).raw(['stash', 'apply', stashToApply], (err, result) => Boolean(result) ? console.log(result) : console.log(err));
         }
-    };
-    return {
-        popStash: (workingDirectory, stashMessage) => {
-            git(workingDirectory).raw(['stash', 'list'], (err, result) => Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err));
-        }
-    };
+    }
 };
