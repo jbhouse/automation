@@ -19,6 +19,6 @@ module.exports = (git) => {
         }
     }
     function gitCheckout(workingDirectory, givenBranchName) {
-        git(workingDirectory).raw(['branch', '-a'], (err, result) => Boolean(result) ? parseGitBranches(result, givenBranchName, workingDirectory) : console.log(err));
+        git(workingDirectory).raw(['branch'], (err, result) => Boolean(result) ? parseGitBranches(result, givenBranchName, workingDirectory) : console.log(err));
     }
 };
