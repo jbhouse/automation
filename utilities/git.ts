@@ -1,4 +1,5 @@
 module.exports = (fs: any) => {
+    // can replace simple-git with child exec calls
     const git = require('simple-git');
     const gitPull = require('./implementations/gitPull');
     const gitCheckout = require('./implementations/gitCheckout');
@@ -10,7 +11,7 @@ module.exports = (fs: any) => {
     const openPr = require('./implementations/openPR');
     const google = require('./implementations/google');
     const cmd = require('./implementations/commandLine')(fs);
-    const filters = require('./filters')(cmd);
+    const filters = require('./filters')(cmd, fs);
 
     return {
         update: (path: string) => gitUpdate(cmd, filters, git).gitUpdate(path)
