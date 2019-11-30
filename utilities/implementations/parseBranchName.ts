@@ -1,7 +1,7 @@
+var { execSync } = require("child_process");
+
 module.exports = {
-    // find a way to replace this with childprocess, or maybe simple git
-    parseGitBranch: (pathName: string) =>
-        require('git-branch')(pathName)
-            .then((name: string) => name)
-            .catch(console.error)
+    parseGitBranch: function parseGitBranch(cwd: any) {
+        return execSync("git branch -a", { cwd, encoding: "utf8" }).split("\n").filter((branchName: string) => branchName.includes("*"))[0].replace("* ", "");
+    }
 }
