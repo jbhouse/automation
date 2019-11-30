@@ -7,8 +7,7 @@ module.exports = (childProcess) => {
                 console.log("error: ", err);
                 return;
             } // node couldn't execute the command
-            console.log(stdout);
-            console.log(stderr);
+            Boolean(stdout) ? console.log(stdout) : console.log(stderr);
         });
     }
 };
