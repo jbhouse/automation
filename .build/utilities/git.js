@@ -12,6 +12,7 @@ module.exports = (fs) => {
     const openPr = require('./implementations/openPR');
     const google = require('./implementations/google');
     const cmd = require('./implementations/commandLine')(fs);
+    const gitBranches = require('./implementations/gitListBranches');
     const filters = require('./filters')(cmd, fs);
     return {
         update: (path) => gitUpdate(cmd, filters, git).gitUpdate(path),
@@ -19,8 +20,8 @@ module.exports = (fs) => {
         pull: (workingDirectory, branchName) => gitPull(git).gitPull(workingDirectory, branchName),
         commit: (workingDirectory, commitMessage) => gitCommit(git).gitCommit(workingDirectory, commitMessage),
         GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
-        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(process.cwd())),
-        parseBranch: (executablePath) => parseBranchName.parseGitBranch(executablePath),
+        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches(process.cwd()))),
+        parseBranch: (executablePath) => parseBranchName.parseGitBranch(gitBranches.listBranches(executablePath)),
         popStashByName: (workingDirectory, stashName) => gitPopStash(git).popStash(workingDirectory, stashName)
     };
 };
