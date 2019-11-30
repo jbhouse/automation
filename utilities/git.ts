@@ -16,7 +16,7 @@ module.exports = (fs: any) => {
 
     return {
         update: (path: string) => gitUpdate(cmd, filters, git).gitUpdate(path)
-        , checkout: (workingDirectory: string, branchName: string) => gitCheckout(git).gitCheckout(workingDirectory, branchName)
+        , checkout: (workingDirectory: string, branchName: string) => gitCheckout(git).gitCheckout(workingDirectory, branchName, gitBranches.listBranches(process.cwd()))
         , pull: (workingDirectory: string, branchName: string) => gitPull(git).gitPull(workingDirectory, branchName)
         , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit(git).gitCommit(workingDirectory, commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl.gitUrl())
