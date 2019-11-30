@@ -1,12 +1,11 @@
 "use strict";
-module.exports = (git) => {
-    return ({ "gitCheckout": gitCheckout });
-    function parseGitBranches(branchList, branchMessage, workingDirectory) {
+module.exports = {
+    gitCheckout: function gitCheckout(workingDirectory, givenBranchName, branchList) {
         let listOfBranches = branchList
             .filter(msg => !msg.includes("remote"))
             .map(msg => msg.replace("*", "").trim())
             .filter(msg => msg !== "");
-        let branchNamesContainingInput = listOfBranches.filter(msg => msg.includes(branchMessage));
+        let branchNamesContainingInput = listOfBranches.filter(msg => msg.includes(givenBranchName));
         if (branchNamesContainingInput.length == 0) {
             console.log("No branches were found with the given message. branch messages: ", branchList);
         }
@@ -23,8 +22,5 @@ module.exports = (git) => {
                 console.log(stderr);
             });
         }
-    }
-    function gitCheckout(workingDirectory, givenBranchName, branchList) {
-        parseGitBranches(branchList, givenBranchName, workingDirectory);
     }
 };
