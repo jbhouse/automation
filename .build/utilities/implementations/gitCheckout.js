@@ -3,7 +3,6 @@ module.exports = (git) => {
     return ({ "gitCheckout": gitCheckout });
     function parseGitBranches(branchList, branchMessage, workingDirectory) {
         let listOfBranches = branchList
-            .split("\n")
             .filter(msg => !msg.includes("remote"))
             .map(msg => msg.replace("*", "").trim())
             .filter(msg => msg !== "");
@@ -15,10 +14,17 @@ module.exports = (git) => {
             console.log("More than one branch was found that contains the given input: ", branchNamesContainingInput);
         }
         else {
-            git(workingDirectory).raw(['checkout', branchNamesContainingInput[0]], (err, result) => Boolean(result) ? console.log(result) : err);
+            require('child_process').exec('git checkout ' + branchNamesContainingInput[0], (err, stdout, stderr) => {
+                if (err) {
+                    console.log("error: ", err);
+                    return;
+                } // node couldn't execute the command
+                console.log(stdout);
+                console.log(stderr);
+            });
         }
     }
-    function gitCheckout(workingDirectory, givenBranchName) {
-        git(workingDirectory).raw(['branch'], (err, result) => Boolean(result) ? parseGitBranches(result, givenBranchName, workingDirectory) : console.log(err));
+    function gitCheckout(workingDirectory, givenBranchName, branchList) {
+        parseGitBranches(branchList, givenBranchName, workingDirectory);
     }
 };
