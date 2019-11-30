@@ -15,9 +15,9 @@ module.exports = (fs) => {
     const gitBranches = require('./implementations/gitListBranches');
     const filters = require('./filters')(cmd, fs);
     return {
-        update: (path) => gitUpdate(cmd, filters, git).gitUpdate(path),
+        update: (path) => gitUpdate(cmd, filters).gitUpdate(path, gitPull.gitPull),
         checkout: (workingDirectory, branchName) => gitCheckout.gitCheckout(workingDirectory, branchName, gitBranches.listBranches(process.cwd())),
-        pull: (workingDirectory, branchName) => gitPull(git).gitPull(workingDirectory, branchName),
+        pull: (workingDirectory, branchName) => gitPull.gitPull(branchName, workingDirectory),
         commit: (workingDirectory, commitMessage) => gitCommit(git).gitCommit(workingDirectory, commitMessage),
         GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
         openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches(process.cwd()))),

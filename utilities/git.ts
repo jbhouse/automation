@@ -15,9 +15,9 @@ module.exports = (fs: any) => {
     const filters = require('./filters')(cmd, fs);
 
     return {
-        update: (path: string) => gitUpdate(cmd, filters, git).gitUpdate(path)
+        update: (path: string) => gitUpdate(cmd, filters).gitUpdate(path, gitPull.gitPull)
         , checkout: (workingDirectory: string, branchName: string) => gitCheckout.gitCheckout(workingDirectory, branchName, gitBranches.listBranches(process.cwd()))
-        , pull: (workingDirectory: string, branchName: string) => gitPull(git).gitPull(workingDirectory, branchName)
+        , pull: (workingDirectory: string, branchName: string) => gitPull.gitPull(branchName, workingDirectory)
         , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit(git).gitCommit(workingDirectory, commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl.gitUrl())
         , openPR: (executablePath: string) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches(process.cwd())))

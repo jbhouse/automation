@@ -1,6 +1,7 @@
 "use strict";
 module.exports = {
-    gitCheckout: function gitCheckout(workingDirectory, givenBranchName, branchList) {
+    gitCheckout: (workingDirectory, givenBranchName, branchList) => {
+        // need to change to working directory, if not current directory
         let listOfBranches = branchList
             .filter(msg => !msg.includes("remote"))
             .map(msg => msg.replace("*", "").trim())

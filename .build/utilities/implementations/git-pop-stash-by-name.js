@@ -2,7 +2,15 @@
 module.exports = (git) => {
     return ({ "popStash": popStash });
     function popStash(workingDirectory, stashMessage) {
-        git(workingDirectory).raw(['stash', 'list'], (err, result) => Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err));
+        let workingDir = Boolean(workingDirectory) ? workingDirectory : process.cwd();
+        require('child_process').exec('git stash list ', { cwd: workingDir }, (err, stdout, stderr) => {
+            if (Boolean(err)) {
+                console.log(workingDir);
+                console.log("Error: ", err);
+                return;
+            } // node couldn't execute the command
+            Boolean(stdout) ? parseGitStashList(stdout, stashMessage, workingDirectory) : console.log(stderr);
+        });
     }
     function parseGitStashList(stashList, stashMessage, workingDirectory) {
         let listOfStashMessages = stashList.split("\n");
