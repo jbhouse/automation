@@ -19,7 +19,7 @@ module.exports = (fs: any) => {
         , pull: (workingDirectory: string, branchName: string) => gitPull(git).gitPull(workingDirectory, branchName)
         , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit(git).gitCommit(workingDirectory, commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl.gitUrl())
-        , openPR: (executablePath: string) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle)
+        , openPR: (executablePath: string) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(process.cwd()))
         , parseBranch: (executablePath: string) => parseBranchName.parseGitBranch(executablePath)
         , popStashByName: (workingDirectory: string, stashName: string) => gitPopStash(git).popStash(workingDirectory, stashName)
     }
