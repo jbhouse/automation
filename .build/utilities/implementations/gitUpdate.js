@@ -1,12 +1,10 @@
 "use strict";
-module.exports = (cmd, filters, git) => {
+module.exports = (cmd, filters) => {
     return {
-        gitUpdate: (path) => {
-            console.log("Updating git repos");
+        gitUpdate: (path, fn) => {
+            console.log("Updating git repos \n");
             filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach((projectName) => {
-                git(projectName).raw(['pull', 'origin', 'develop'], (err, result) => {
-                    Boolean(result) ? console.log(projectName + "---", result) : console.log(projectName + "---", err);
-                });
+                fn('develop', projectName, (err) => err.toString().split("\n")[1]);
             });
         }
     };

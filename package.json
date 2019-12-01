@@ -17,15 +17,13 @@
     "automation"
   ],
   "author": "Joe Moorhouse",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jbhouse/automation/issues"
   },
   "homepage": "https://github.com/jbhouse/automation#readme",
   "dependencies": {
     "@types/node": "^12.6.8",
-    "parse-git-config": "^3.0.0",
-    "simple-git": "^1.126.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.2"
   }

@@ -1,8 +1,10 @@
 module.exports = (fs: any) => {
     return ({
         "checkIfFileExists": checkIfFileExists,
-        "changeDirectoryTo": changeDirectoryTo
+        "changeDirectoryTo": changeDirectoryTo,
+        "readFile": readFile
     });
-    function changeDirectoryTo(directoryPath: string) { return fs.readdirSync(directoryPath).map((project: string) => directoryPath + project) }
-    function checkIfFileExists(absolutePathOfFile: string) { return fs.existsSync(absolutePathOfFile) }
+    function changeDirectoryTo(directoryPath: string): string { return fs.readdirSync(directoryPath).map((project: string) => directoryPath + project) }
+    function checkIfFileExists(absolutePathOfFile: string): boolean { return fs.existsSync(absolutePathOfFile) }
+    function readFile(filePath: string) { return fs.readFileSync(filePath) }
 }

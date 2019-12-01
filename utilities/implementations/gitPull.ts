@@ -1,11 +1,20 @@
-module.exports = (git: any) => {
+module.exports = {
+    gitPull: (givenBranchName: string, workingDirectory: string, errorFormattingFunction?: any) => {
 
-    return ({ "gitPull": gitPull });
+        let workingDir: string = Boolean(workingDirectory) ? workingDirectory : process.cwd();
+        let branchName: string = Boolean(givenBranchName) ? givenBranchName : "develop";
 
-    function gitPull(workingDirectory: string, givenBranchName: string) {
-        git(workingDirectory).raw(
-            ['pull', 'origin', (Boolean(givenBranchName) ? givenBranchName : "develop")],
-            (err: string, result: string) => Boolean(result) ? console.log(result) : console.log(err)
-        )
+        require('child_process').exec('git pull origin ' + branchName, { cwd: workingDir }, (err: any, stdout: string, stderr: string) => {
+            if (Boolean(err)) {
+                console.log(workingDir);
+                if (Boolean(errorFormattingFunction)) {
+                    console.log("Error: ", errorFormattingFunction(err), "\n");
+                } else {
+                    console.log("Error: ", err);
+                }
+                return;
+            } // node couldn't execute the command
+            Boolean(stdout) ? console.log(stdout) : console.log(stderr)
+        })
     }
 }

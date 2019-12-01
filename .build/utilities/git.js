@@ -1,7 +1,5 @@
 "use strict";
 module.exports = (fs) => {
-    // can replace simple-git with child exec calls
-    const git = require('simple-git');
     const gitPull = require('./implementations/gitPull');
     const gitCheckout = require('./implementations/gitCheckout');
     const gitUrl = require('./implementations/gitUrl');
@@ -15,13 +13,13 @@ module.exports = (fs) => {
     const gitBranches = require('./implementations/gitListBranches');
     const filters = require('./filters')(cmd, fs);
     return {
-        update: (path) => gitUpdate(cmd, filters, git).gitUpdate(path),
-        checkout: (workingDirectory, branchName) => gitCheckout(git).gitCheckout(workingDirectory, branchName, gitBranches.listBranches(process.cwd())),
-        pull: (workingDirectory, branchName) => gitPull(git).gitPull(workingDirectory, branchName),
-        commit: (workingDirectory, commitMessage) => gitCommit(git).gitCommit(workingDirectory, commitMessage),
-        GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl.gitUrl()),
-        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl.gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches(process.cwd()))),
+        update: (path) => gitUpdate(cmd, filters).gitUpdate(path, gitPull.gitPull),
+        checkout: (workingDirectory, branchName) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches(process.cwd()), workingDirectory),
+        pull: (workingDirectory, branchName) => gitPull.gitPull(branchName, workingDirectory),
+        commit: (workingDirectory, commitMessage) => gitCommit.gitCommit(workingDirectory, commitMessage),
+        GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl(cmd).gitUrl()),
+        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl(cmd).gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches(process.cwd()))),
         parseBranch: (executablePath) => parseBranchName.parseGitBranch(gitBranches.listBranches(executablePath)),
-        popStashByName: (workingDirectory, stashName) => gitPopStash(git).popStash(workingDirectory, stashName)
+        popStashByName: (workingDirectory, stashName) => gitPopStash.popStash(workingDirectory, stashName)
     };
 };

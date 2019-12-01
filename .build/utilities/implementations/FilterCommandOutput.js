@@ -1,13 +1,13 @@
 "use strict";
-module.exports = {
-    filterOutput: (command, filterKey) => {
-        require('child_process').exec(command + filterKey, (err, stdout, stderr) => {
+module.exports = (childProcess) => {
+    return ({ "filterOutput": filterOutput });
+    function filterOutput(command, filterKey) {
+        childProcess.exec(command + filterKey, (err, stdout, stderr) => {
             if (err) {
                 console.log("error: ", err);
                 return;
             } // node couldn't execute the command
-            console.log(stdout);
-            console.log(stderr);
+            Boolean(stdout) ? console.log(stdout) : console.log(stderr);
         });
     }
 };

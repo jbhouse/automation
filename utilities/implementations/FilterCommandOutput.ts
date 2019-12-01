@@ -1,12 +1,14 @@
-module.exports = {
-    filterOutput: (command: string, filterKey: string) => {
-        require('child_process').exec(command + filterKey, (err: string, stdout: string, stderr: string) => {
+module.exports = (childProcess: any) => {
+
+    return ({ "filterOutput": filterOutput })
+
+    function filterOutput(command: string, filterKey: string): void {
+        childProcess.exec(command + filterKey, (err: string, stdout: string, stderr: string) => {
             if (err) {
                 console.log("error: ", err);
                 return;
             } // node couldn't execute the command
-            console.log(stdout);
-            console.log(stderr);
+            Boolean(stdout) ? console.log(stdout) : console.log(stderr)
         })
     }
 }

@@ -1,10 +1,17 @@
 "use strict";
-module.exports = (git) => {
-    return ({ "popStash": popStash });
-    function popStash(workingDirectory, stashMessage) {
-        git(workingDirectory).raw(['stash', 'list'], (err, result) => Boolean(result) ? parseGitStashList(result, stashMessage, workingDirectory) : console.log(err));
-    }
-    function parseGitStashList(stashList, stashMessage, workingDirectory) {
+module.exports = {
+    popStash: function popStash(workingDirectory, stashMessage) {
+        let workingDir = Boolean(workingDirectory) ? workingDirectory : process.cwd();
+        require('child_process').exec('git stash list ', { cwd: workingDir }, (err, stdout, stderr) => {
+            if (Boolean(err)) {
+                console.log(workingDir);
+                console.log("Error: ", err);
+                return;
+            } // node couldn't execute the command
+            Boolean(stdout) ? this.parseGitStashList(stdout, stashMessage, workingDirectory) : console.log(stderr);
+        });
+    },
+    parseGitStashList: function parseGitStashList(stashList, stashMessage, workingDirectory) {
         let listOfStashMessages = stashList.split("\n");
         let stashMessagesContainingInput = listOfStashMessages.filter(msg => msg.includes(stashMessage));
         if (stashMessagesContainingInput.length == 0) {
@@ -15,7 +22,13 @@ module.exports = (git) => {
         }
         else {
             let stashToApply = "stash@{" + listOfStashMessages.indexOf(stashMessagesContainingInput[0]) + "}";
-            git(workingDirectory).raw(['stash', 'apply', stashToApply], (err, result) => Boolean(result) ? console.log(result) : console.log(err));
+            require('child_process').exec('git stash apply ' + stashToApply, { cwd: workingDirectory }, (err, stdout, stderr) => {
+                if (Boolean(err)) {
+                    console.log("Error: ", err);
+                    return;
+                } // node couldn't execute the command
+                Boolean(stdout) ? console.log(stdout) : console.log(stderr);
+            });
         }
     }
 };

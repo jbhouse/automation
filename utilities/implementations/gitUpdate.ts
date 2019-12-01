@@ -1,12 +1,9 @@
-module.exports = (cmd: any, filters: any, git: any) => {
+module.exports = (cmd: any, filters: any) => {
     return {
-        gitUpdate: (path: string) => {
-            console.log("Updating git repos");
+        gitUpdate: (path: string, fn: any) => {
+            console.log("Updating git repos \n");
             filters.filterForGitProjects(cmd.changeDirectoryTo(path)).forEach((projectName: string) => {
-                git(projectName).raw(
-                    ['pull', 'origin', 'develop'], (err: string, result: string) => {
-                        Boolean(result) ? console.log(projectName + "---", result) : console.log(projectName + "---", err)
-                    });
+                fn('develop', projectName, (err: any) => err.toString().split("\n")[1]);
             })
         }
     }
