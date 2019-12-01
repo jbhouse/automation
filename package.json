@@ -17,19 +17,14 @@
     "automation"
   ],
   "author": "Joe Moorhouse",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jbhouse/automation/issues"
   },
   "homepage": "https://github.com/jbhouse/automation#readme",
   "dependencies": {
-    "@types/express": "^4.17.0",
     "@types/node": "^12.6.8",
-    "git-branch": "^2.0.1",
-    "parse-git-config": "^3.0.0",
-    "simple-git": "^1.122.0",
-    "ts-node-dev": "^1.0.0-pre.40",
-    "typescript": "^3.5.3",
-    "xml2js": "^0.4.19"
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.2"
   }
 }
