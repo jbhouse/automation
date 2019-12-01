@@ -1,6 +1,7 @@
 module.exports = {
-    gitCheckout: (workingDirectory: string, givenBranchName: string, branchList: string[]) => {
+    gitCheckout: (givenBranchName: string, branchList: string[], workingDirectory?: string) => {
         // need to change to working directory, if not current directory
+        let workingDir: string = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd();
         let listOfBranches: string[] = branchList
             .filter(msg => !msg.includes("remote"))
             .map(msg => msg.replace("*", "").trim())
@@ -11,7 +12,7 @@ module.exports = {
         } else if (branchNamesContainingInput.length > 1) {
             console.log("More than one branch was found that contains the given input: ", branchNamesContainingInput);
         } else {
-            require('child_process').exec('git checkout ' + branchNamesContainingInput[0], (err: string, stdout: string, stderr: string) => {
+            require('child_process').exec('git checkout ' + branchNamesContainingInput[0], { cwd: workingDir }, (err: string, stdout: string, stderr: string) => {
                 if (err) {
                     console.log("error: ", err);
                     return;
