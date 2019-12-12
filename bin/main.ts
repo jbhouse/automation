@@ -13,11 +13,9 @@ const commandMap: any = {
         , "goToGithub": () => gitCommands(fs).GitUrl(process.argv[3])
         , "openPR": () => gitCommands(fs).openPR(process.argv[3])
         , "parseBranch": () => gitCommands(fs).parseBranch(process.argv[3])
-        , "commitBranchName": () => gitCommands(fs).commit(process.argv[3], gitCommands(fs).parseBranch(process.argv[3]) + ": " + process.argv.slice(4).join(" "))
+        , "commitBranchName": () => gitCommands(fs).commit(process.argv[3], process.argv.slice(4).join(" "))
         , "dailyUpdate": () => dailyUpdate(fs).update(process.argv[3], gitCommands(fs).update)
         , "google": () => cliUtils.google(process.argv[3], process.argv)
-        , "FilterMavenCommand": () => cliUtils.FilterOutput(process.argv[3], " | grep --line-buffered "
-                + process.argv.slice(4).join(" | grep --line-buffered "))
 }
 
 commandMap[commandToInvoke]();

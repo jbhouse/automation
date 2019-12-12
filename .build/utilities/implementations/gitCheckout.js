@@ -4,8 +4,8 @@ module.exports = {
         // need to change to working directory, if not current directory
         let workingDir = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd();
         let listOfBranches = branchList
-            .filter(msg => !msg.includes("remote"))
-            .map(msg => msg.replace("*", "").trim())
+            .filter(msg => msg.includes("remotes/origin/"))
+            .map(msg => msg.replace("remotes/origin/", "").replace("*", "").trim())
             .filter(msg => msg !== "");
         let branchNamesContainingInput = listOfBranches.filter(msg => msg.includes(givenBranchName));
         if (branchNamesContainingInput.length == 0) {
