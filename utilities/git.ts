@@ -17,7 +17,6 @@ module.exports = (fs: any) => {
         , checkout: (workingDirectory: string, branchName: string) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches, workingDirectory)
         , pull: (workingDirectory: string, branchName: string) => gitPull.gitPull(branchName, workingDirectory)
         , commit: (workingDirectory: string, commitMessage: string[]) => parseBranchName.parseGitBranch(gitBranches.listBranches, gitCommit.gitCommit(workingDirectory, commitMessage), workingDirectory)
-        // gitCommit.gitCommit(workingDirectory, parseBranchName.parseGitBranch(gitBranches.listBranches) + ": " + commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl(cmd).gitUrl())
         , openPR: (googleChromeExecutablePath: string) => parseBranchName.parseGitBranch(gitBranches.listBranches, openPr.openPR(googleChromeExecutablePath, gitUrl(cmd).gitUrl(), google.searchGoogle))
         , parseBranch: (executablePath: string) => parseBranchName.parseGitBranch(gitBranches.listBranches, console.log, executablePath)
