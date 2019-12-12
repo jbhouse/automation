@@ -1,7 +1,14 @@
 module.exports = {
-    gitCheckout: (givenBranchName: string, branchList: string[], workingDirectory?: string) => {
-        // need to change to working directory, if not current directory
+    gitCheckout: (givenBranchName: string, branchListFunction: any, workingDirectory?: string) => {
         let workingDir: string = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd();
+        branchListFunction(workingDir, performCheckout(givenBranchName));
+    }
+}
+
+function performCheckout(givenBranchName: string) {
+    return (branchList: string[], workingDirectory?: string) => {
+        // need to change to working directory, if not current directory
+        let workingDir: string = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd()
         let listOfBranches: string[] = branchList
             .filter(msg => msg.includes("remotes/origin/"))
             .map(msg => msg.replace("remotes/origin/", "").replace("*", "").trim())

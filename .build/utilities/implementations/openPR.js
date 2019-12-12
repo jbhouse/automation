@@ -1,7 +1,9 @@
 "use strict";
 module.exports = {
-    openPR: (executablePath, pullRequestUrl, fn, branchName) => {
-        pullRequestUrl += "\\pull\\new\\" + branchName;
-        fn(executablePath, pullRequestUrl);
+    openPR: (executablePath, pullRequestUrl, fn) => {
+        return (branchName) => {
+            pullRequestUrl += "\\pull\\new\\" + branchName;
+            fn(executablePath, pullRequestUrl);
+        };
     }
 };

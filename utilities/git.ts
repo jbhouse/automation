@@ -14,12 +14,13 @@ module.exports = (fs: any) => {
 
     return {
         update: (path: string) => gitUpdate(cmd, filters).gitUpdate(path, gitPull.gitPull)
-        , checkout: (workingDirectory: string, branchName: string) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches(), workingDirectory)
+        , checkout: (workingDirectory: string, branchName: string) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches, workingDirectory)
         , pull: (workingDirectory: string, branchName: string) => gitPull.gitPull(branchName, workingDirectory)
-        , commit: (workingDirectory: string, commitMessage: string[]) => gitCommit.gitCommit(workingDirectory, parseBranchName.parseGitBranch(gitBranches.listBranches(workingDirectory)) + ": " + commitMessage)
+        , commit: (workingDirectory: string, commitMessage: string[]) => parseBranchName.parseGitBranch(gitBranches.listBranches, gitCommit.gitCommit(workingDirectory, commitMessage), workingDirectory)
+        // gitCommit.gitCommit(workingDirectory, parseBranchName.parseGitBranch(gitBranches.listBranches) + ": " + commitMessage)
         , GitUrl: (executablePath: string) => google.searchGoogle(executablePath, gitUrl(cmd).gitUrl())
-        , openPR: (executablePath: string) => openPr.openPR(executablePath, gitUrl(cmd).gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches()))
-        , parseBranch: (executablePath: string) => parseBranchName.parseGitBranch(gitBranches.listBranches(executablePath))
+        , openPR: (googleChromeExecutablePath: string) => parseBranchName.parseGitBranch(gitBranches.listBranches, openPr.openPR(googleChromeExecutablePath, gitUrl(cmd).gitUrl(), google.searchGoogle))
+        , parseBranch: (executablePath: string) => parseBranchName.parseGitBranch(gitBranches.listBranches, console.log, executablePath)
         , popStashByName: (workingDirectory: string, stashName: string) => gitPopStash.popStash(workingDirectory, stashName)
     }
 }

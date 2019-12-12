@@ -14,12 +14,14 @@ module.exports = (fs) => {
     const filters = require('./filters')(cmd, fs);
     return {
         update: (path) => gitUpdate(cmd, filters).gitUpdate(path, gitPull.gitPull),
-        checkout: (workingDirectory, branchName) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches(), workingDirectory),
+        checkout: (workingDirectory, branchName) => gitCheckout.gitCheckout(branchName, gitBranches.listBranches, workingDirectory),
         pull: (workingDirectory, branchName) => gitPull.gitPull(branchName, workingDirectory),
-        commit: (workingDirectory, commitMessage) => gitCommit.gitCommit(workingDirectory, parseBranchName.parseGitBranch(gitBranches.listBranches(workingDirectory)) + ": " + commitMessage),
+        commit: (workingDirectory, commitMessage) => parseBranchName.parseGitBranch(gitBranches.listBranches, gitCommit.gitCommit(workingDirectory, commitMessage), workingDirectory)
+        // gitCommit.gitCommit(workingDirectory, parseBranchName.parseGitBranch(gitBranches.listBranches) + ": " + commitMessage)
+        ,
         GitUrl: (executablePath) => google.searchGoogle(executablePath, gitUrl(cmd).gitUrl()),
-        openPR: (executablePath) => openPr.openPR(executablePath, gitUrl(cmd).gitUrl(), google.searchGoogle, parseBranchName.parseGitBranch(gitBranches.listBranches())),
-        parseBranch: (executablePath) => parseBranchName.parseGitBranch(gitBranches.listBranches(executablePath)),
+        openPR: (googleChromeExecutablePath) => parseBranchName.parseGitBranch(gitBranches.listBranches, openPr.openPR(googleChromeExecutablePath, gitUrl(cmd).gitUrl(), google.searchGoogle)),
+        parseBranch: (executablePath) => parseBranchName.parseGitBranch(gitBranches.listBranches, console.log, executablePath),
         popStashByName: (workingDirectory, stashName) => gitPopStash.popStash(workingDirectory, stashName)
     };
 };

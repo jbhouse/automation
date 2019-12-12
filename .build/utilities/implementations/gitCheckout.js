@@ -1,6 +1,12 @@
 "use strict";
 module.exports = {
-    gitCheckout: (givenBranchName, branchList, workingDirectory) => {
+    gitCheckout: (givenBranchName, branchListFunction, workingDirectory) => {
+        let workingDir = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd();
+        branchListFunction(workingDir, performCheckout(givenBranchName));
+    }
+};
+function performCheckout(givenBranchName) {
+    return (branchList, workingDirectory) => {
         // need to change to working directory, if not current directory
         let workingDir = Boolean(workingDirectory) && workingDirectory != undefined ? workingDirectory : process.cwd();
         let listOfBranches = branchList
@@ -23,5 +29,5 @@ module.exports = {
                 Boolean(stdout) ? console.log(stdout) : console.log(stderr);
             });
         }
-    }
-};
+    };
+}
