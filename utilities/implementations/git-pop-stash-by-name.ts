@@ -3,10 +3,9 @@ module.exports = {
         let workingDir: string = Boolean(workingDirectory) ? workingDirectory : process.cwd();
         require('child_process').exec('git stash list ', { cwd: workingDir }, (err: any, stdout: string, stderr: string) => {
             if (Boolean(err)) {
-                console.log(workingDir);
                 console.log("Error: ", err);
                 return;
-            } // node couldn't execute the command
+            }
             Boolean(stdout) ? this.parseGitStashList(stdout, stashMessage, workingDirectory) : console.log(stderr)
         })
     },
