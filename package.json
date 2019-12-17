@@ -24,6 +24,7 @@
   "homepage": "https://github.com/jbhouse/automation#readme",
   "dependencies": {
     "@types/node": "^12.6.8",
+    "clipboardy": "^2.1.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.2"
   }

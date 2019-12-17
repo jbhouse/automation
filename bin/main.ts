@@ -2,6 +2,7 @@ const fs = require('fs');
 const gitCommands = require('../utilities/git');
 const dailyUpdate = require('../utilities/implementations/taskIncrementor');
 const cliUtils = require('../utilities/cliUtils');
+const sqlUtils = require('../utilities/sqlUtils');
 const commandToInvoke: string = process.argv[2];
 
 const commandMap: any = {
@@ -16,6 +17,7 @@ const commandMap: any = {
         , "commitBranchName": () => gitCommands(fs).commit(process.argv[3], process.argv.slice(4).join(" "))
         , "dailyUpdate": () => dailyUpdate(fs).update(process.argv[3], gitCommands(fs).update)
         , "google": () => cliUtils.google(process.argv[3], process.argv)
+        , "sql": () => sqlUtils.getSqlCommand(process.argv.slice(3).join(" "))
 }
 
 commandMap[commandToInvoke]();
