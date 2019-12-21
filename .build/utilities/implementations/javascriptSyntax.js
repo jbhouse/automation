@@ -160,7 +160,7 @@ function urlConstructor(openInBrowserFunction, browserExecutablePath, userInput)
             input: process.stdin,
             output: process.stdout
         });
-        rl.question('What do you think of Node.js? ', (answer) => {
+        rl.question('Enter your choice here: ', (answer) => {
             openInBrowserFunction(browserExecutablePath, baseUrl + globalObjectList[Number(answer)] + "/" + userInput);
             rl.close();
         });

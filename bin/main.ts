@@ -3,6 +3,7 @@ const gitCommands = require('../utilities/git');
 const dailyUpdate = require('../utilities/implementations/taskIncrementor');
 const cliUtils = require('../utilities/cliUtils');
 const sqlUtils = require('../utilities/implementations/sqlSyntax');
+const codeCoffer = require('../utilities/implementations/callToCodeCoffer');
 const commandToInvoke: string = process.argv[2];
 
 const commandMap: any = {
@@ -19,6 +20,7 @@ const commandMap: any = {
         , "google": () => cliUtils.google(process.argv[3], process.argv)
         , "sql": () => sqlUtils.getSqlCommand(process.argv.slice(3).join(" "))
         , "jsSyntax": () => cliUtils.searchForJavascriptSyntax(process.argv[3], process.argv.slice(4).join(" "))
+        , "codeCoffer": () => codeCoffer.openSnippet(process.argv.slice(3).join(" "))
 }
 
 commandMap[commandToInvoke]();
