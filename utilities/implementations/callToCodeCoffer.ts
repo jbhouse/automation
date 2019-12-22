@@ -1,3 +1,9 @@
+import { Snippet } from "../models/snippet";
+const clipboardy = require('clipboardy');
+
+var fs = require('fs');
+let snippetDirectory = 'C:\\snippets\\';
+
 const https = require('https');
 
 module.exports = {
@@ -6,7 +12,6 @@ module.exports = {
 
 function openSnippetFromUrl(userInput: string) {
     let id = userInput.split("import/")[1];
-    // let id = "V7NWC3Z5MHQ6FR4D";
     let url = generateUrl(id);
     getSnippet(url);
 }
@@ -19,33 +24,26 @@ function getSnippet(url: string) {
     https.get(url, (resp: any) => {
         let data = '';
 
-        // A chunk of data has been recieved.
         resp.on('data', (chunk: any) => {
             data += chunk;
         });
 
-        // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            console.log(JSON.parse(data));
+
+            if (!fs.existsSync(snippetDirectory)) {
+                fs.mkdirSync(snippetDirectory);
+            }
+
+            let snip: Snippet = Snippet.createValidSnippet(JSON.parse(data)[0].message.content);
+
+            snip.supplements.forEach(supplement => {
+                let fileName = supplement.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join('') + '.' + supplement.language;
+                fs.writeFileSync(snippetDirectory + fileName, supplement.code);
+            });
+            clipboardy.writeSync(snip.supplements[0].code);
         });
 
     }).on("error", (err: any) => {
         console.log("Error: " + err.message);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
