@@ -1,4 +1,3 @@
-const readline = require('readline');
 var baseUrl = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/"
 
 let methodToGlobalObjectMap: any = {
@@ -145,10 +144,10 @@ let methodToGlobalObjectMap: any = {
 }
 
 module.exports = {
-    getJavascriptUrl: (openInBrowserFunction: any, browserExecutablePath: string, userInput: string) => urlConstructor(openInBrowserFunction, browserExecutablePath, userInput)
+    getJavascriptUrl: (openInBrowserFunction: any, browserExecutablePath: string, userInput: string, readline: any) => urlConstructor(openInBrowserFunction, browserExecutablePath, userInput, readline)
 }
 
-function urlConstructor(openInBrowserFunction: any, browserExecutablePath: string, userInput: string) {
+function urlConstructor(openInBrowserFunction: any, browserExecutablePath: string, userInput: string, readline: any) {
 
     let globalObjectList: string[] = methodToGlobalObjectMap[userInput];
     if (globalObjectList === undefined) {

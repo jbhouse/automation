@@ -1,5 +1,4 @@
 "use strict";
-const readline = require('readline');
 var baseUrl = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/";
 let methodToGlobalObjectMap = {
     length: ['Array', 'String'],
@@ -144,9 +143,9 @@ let methodToGlobalObjectMap = {
     resolve: ['Promise']
 };
 module.exports = {
-    getJavascriptUrl: (openInBrowserFunction, browserExecutablePath, userInput) => urlConstructor(openInBrowserFunction, browserExecutablePath, userInput)
+    getJavascriptUrl: (openInBrowserFunction, browserExecutablePath, userInput, readline) => urlConstructor(openInBrowserFunction, browserExecutablePath, userInput, readline)
 };
-function urlConstructor(openInBrowserFunction, browserExecutablePath, userInput) {
+function urlConstructor(openInBrowserFunction, browserExecutablePath, userInput, readline) {
     let globalObjectList = methodToGlobalObjectMap[userInput];
     if (globalObjectList === undefined) {
         openInBrowserFunction(browserExecutablePath, "https://www.google.com/search?q=" + "mdn " + userInput);
@@ -160,7 +159,7 @@ function urlConstructor(openInBrowserFunction, browserExecutablePath, userInput)
             input: process.stdin,
             output: process.stdout
         });
-        rl.question('What do you think of Node.js? ', (answer) => {
+        rl.question('Enter your choice here: ', (answer) => {
             openInBrowserFunction(browserExecutablePath, baseUrl + globalObjectList[Number(answer)] + "/" + userInput);
             rl.close();
         });

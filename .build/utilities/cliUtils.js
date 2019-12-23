@@ -7,6 +7,6 @@ module.exports = (() => {
     return {
         google: (executablePath, query) => google.searchGoogle(executablePath, "https://www.google.com/search?q=" + query.slice(4).join("+")),
         FilterOutput: (command, filterKeys) => maven(childProcess).filterOutput(command, filterKeys),
-        searchForJavascriptSyntax: (browserExecutablePath, userInput) => javascriptSyntax.getJavascriptUrl(google.searchGoogle, browserExecutablePath, userInput)
+        searchForJavascriptSyntax: (browserExecutablePath, userInput, readline) => javascriptSyntax.getJavascriptUrl(google.searchGoogle, browserExecutablePath, userInput, readline)
     };
 })();
