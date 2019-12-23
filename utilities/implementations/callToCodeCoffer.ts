@@ -1,21 +1,36 @@
 import { Snippet } from "../models/snippet";
 const clipboardy = require('clipboardy');
 const https = require('https');
-let snippetDirectory = '.\\snippets\\';
+let snippetBaseDirectory = '.\\snippets\\';
 
 module.exports = (fs: any, userConfig: any) => {
+
     return {
         openSnippet: (userInput: string) => openSnippetFromUrl(userInput, fs)
     }
-}
 
-function openSnippetFromUrl(userInput: string, fs: any) {
-    // check for existing configuration
-    let id = userInput.split("import/")[1];
-    let url = "https://jayman-gameserver.herokuapp.com/conversations/" + id + "?startingIndex=0";
-    // getSnippet(url, [saveFile(fs)]); //update save file to prompt the user to check if they want to overwrite the existing file, if the file is changed
-    getSnippet(url, [saveContentToClipboard]);
+    function openFileInEditor(snippet: Snippet) {
+        const snippetDirectory = snippetBaseDirectory + snippet.title;
+        snippet.supplements.forEach(supplement => {
+            const fileName = supplement.name + '.' + supplement.language;
+            const filePath = '"' + snippetDirectory + "\\" + fileName + '"'
+            require('child_process').exec(userConfig.defaultEditor + " " + filePath);
+        });
+    }
 
+    function openSnippetFromUrl(userInput: string, fs: any) {
+        const id = userInput.split("import/")[1];
+        const url = "https://jayman-gameserver.herokuapp.com/conversations/" + id + "?startingIndex=0";
+        let callbacks = [saveFile(fs)];
+
+        if (userConfig.openFilesOnImport) {
+            callbacks.push(openFileInEditor);
+        }
+        if (userConfig.copyContentsToClipBoard) {
+            callbacks.push(saveContentToClipboard);
+        }
+        getSnippet(url, callbacks); //update save file to prompt the user to check if they want to overwrite the existing file, if the file is changed
+    }
 }
 
 function getSnippet(url: string, callbacks: any[]) {
@@ -27,7 +42,7 @@ function getSnippet(url: string, callbacks: any[]) {
         });
 
         resp.on('end', () => {
-            let snip: Snippet = Snippet.createValidSnippet(JSON.parse(data)[0].message.content);
+            const snip: Snippet = Snippet.createValidSnippet(JSON.parse(data)[0].message.content);
             callbacks.forEach(callback => {
                 callback(snip);
             });
@@ -40,9 +55,17 @@ function getSnippet(url: string, callbacks: any[]) {
 
 function saveFile(fs: any) {
     return (snippet: Snippet) => {
+        let snippetDirectory = snippetBaseDirectory + snippet.title;
+        if (!fs.existsSync(snippetDirectory)) {
+            fs.mkdirSync(snippetDirectory);
+        } else {
+            // ask user if they want to overwrite the existing snippet stored there
+            console.log("this snppet exists, do we want to over write it?");
+        }
+
         snippet.supplements.forEach(supplement => {
-            let fileName = supplement.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join('') + '.' + supplement.language;
-            fs.writeFileSync(snippetDirectory + fileName, supplement.code);
+            let fileName = supplement.name + '.' + supplement.language;
+            fs.writeFileSync(snippetDirectory + "\\" + fileName, supplement.code);
         });
     }
 }
