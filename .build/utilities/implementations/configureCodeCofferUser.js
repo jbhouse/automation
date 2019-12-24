@@ -6,7 +6,7 @@ module.exports = (fs, readline, userConfig) => {
     });
     const openFilesOnImport = () => {
         return new Promise((resolve, reject) => {
-            rl.question("would you like to open snippets when they are imported? (Y/N): ", (answer) => {
+            rl.question("\nWould you like to open snippets when they are imported? (Y/N) \n" + "Currently " + userConfig.openFilesOnImport + ": ", (answer) => {
                 updateUserConfig(answer, 'openFilesOnImport');
                 resolve();
             });
@@ -14,7 +14,7 @@ module.exports = (fs, readline, userConfig) => {
     };
     const copyToClipboard = () => {
         return new Promise((resolve, reject) => {
-            rl.question("would you like to have snippet contents save to your clipboard? (Y/N): ", (answer) => {
+            rl.question("\nWould you like to have snippet contents save to your clipboard? (Y/N) \n" + "Currently " + userConfig.copyContentsToClipBoard + ": ", (answer) => {
                 updateUserConfig(answer, 'copyContentsToClipBoard');
                 resolve();
             });
@@ -22,7 +22,7 @@ module.exports = (fs, readline, userConfig) => {
     };
     const assignDefaultEditorPath = () => {
         return new Promise((resolve, reject) => {
-            rl.question("define the path to the code editor we should open imported/existing snippets in: ", (answer) => {
+            rl.question("\nYour current editor for opening snippets is: " + userConfig.defaultEditor + "\n" + "define the path to the code editor we should open imported/existing snippets in: ", (answer) => {
                 userConfig.defaultEditor = answer;
                 resolve();
             });
@@ -38,6 +38,7 @@ module.exports = (fs, readline, userConfig) => {
     }
     return {
         configureUser: async (userConfigFilePath) => {
+            console.log("\nLeave the input empty for any of the following to keep your current setting");
             await openFilesOnImport();
             await copyToClipboard();
             await assignDefaultEditorPath();

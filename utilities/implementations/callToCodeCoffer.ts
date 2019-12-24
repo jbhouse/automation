@@ -2,6 +2,7 @@ import { Snippet } from "../models/snippet";
 const clipboardy = require('clipboardy');
 const https = require('https');
 let snippetBaseDirectory = '.\\snippets\\';
+let projectBaseDirectory = __dirname.split(".build")[0];
 
 module.exports = (fs: any, userConfig: any) => {
 
@@ -10,7 +11,7 @@ module.exports = (fs: any, userConfig: any) => {
     }
 
     function openFileInEditor(snippet: Snippet) {
-        const snippetDirectory = snippetBaseDirectory + snippet.title;
+        const snippetDirectory = projectBaseDirectory + snippetBaseDirectory + snippet.title;
         snippet.supplements.forEach(supplement => {
             const fileName = supplement.name + '.' + supplement.language;
             const filePath = '"' + snippetDirectory + "\\" + fileName + '"'
@@ -55,7 +56,8 @@ function getSnippet(url: string, callbacks: any[]) {
 
 function saveFile(fs: any) {
     return (snippet: Snippet) => {
-        let snippetDirectory = snippetBaseDirectory + snippet.title;
+        let snippetDirectory = projectBaseDirectory + snippetBaseDirectory + snippet.title;
+
         if (!fs.existsSync(snippetDirectory)) {
             fs.mkdirSync(snippetDirectory);
         } else {

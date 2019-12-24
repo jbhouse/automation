@@ -4,12 +4,13 @@ const snippet_1 = require("../models/snippet");
 const clipboardy = require('clipboardy');
 const https = require('https');
 let snippetBaseDirectory = '.\\snippets\\';
+let projectBaseDirectory = __dirname.split(".build")[0];
 module.exports = (fs, userConfig) => {
     return {
         openSnippet: (userInput) => openSnippetFromUrl(userInput, fs)
     };
     function openFileInEditor(snippet) {
-        const snippetDirectory = snippetBaseDirectory + snippet.title;
+        const snippetDirectory = projectBaseDirectory + snippetBaseDirectory + snippet.title;
         snippet.supplements.forEach(supplement => {
             const fileName = supplement.name + '.' + supplement.language;
             const filePath = '"' + snippetDirectory + "\\" + fileName + '"';
@@ -47,13 +48,13 @@ function getSnippet(url, callbacks) {
 }
 function saveFile(fs) {
     return (snippet) => {
-        let snippetDirectory = snippetBaseDirectory + snippet.title;
+        let snippetDirectory = projectBaseDirectory + snippetBaseDirectory + snippet.title;
         if (!fs.existsSync(snippetDirectory)) {
             fs.mkdirSync(snippetDirectory);
         }
         else {
             // ask user if they want to overwrite the existing snippet stored there
-            console.log("this file exists, do we want to over write it?");
+            console.log("this snppet exists, do we want to over write it?");
         }
         snippet.supplements.forEach(supplement => {
             let fileName = supplement.name + '.' + supplement.language;

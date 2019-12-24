@@ -1,6 +1,6 @@
 {
-  "openFilesOnImport": true,
-  "copyContentsToClipBoard": false,
+  "openFilesOnImport": false,
+  "copyContentsToClipBoard": true,
   "userIsConfigured": true,
-  "defaultEditor": "C:\\S\\code\\Code.exe"
+  "defaultEditor": ""
 }
