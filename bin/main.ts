@@ -24,7 +24,7 @@ const commandMap: any = {
         , "google": () => cliUtils.google(process.argv[3], process.argv)
         , "sql": () => sqlUtils.getSqlCommand(process.argv.slice(3).join(" "))
         , "jsSyntax": () => cliUtils.searchForJavascriptSyntax(process.argv[3], process.argv.slice(4).join(" "), readline)
-        , "codeCoffer": () => codeCoffer(fs, userConfiguration).openSnippet(process.argv.slice(3).join(" "))
+        , "codeCoffer": () => codeCoffer(fs, readline, userConfiguration).openSnippet(process.argv.slice(3).join(" "))
         , "configureUser": () => configureCodeCofferUser(fs, readline, userConfiguration).configureUser(projectBaseDirectory + "userConfig.json")
 }
 
